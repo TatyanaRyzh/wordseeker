@@ -1,7 +1,9 @@
 import React from 'react'
 
 const Header = () => (
-  <div>Header</div>
+  <div className="header" style={{height: "11vh"}}>
+    Header
+  </div>
 )
 
 export default Header
