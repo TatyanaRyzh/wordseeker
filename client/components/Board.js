@@ -10,8 +10,8 @@ for (let i = 0; i < size; i++) {
 }
 
 const Board = () => (
-  <div className="board" style={{width: "100%", float: "left",  height: "73vh"}}>
-  {letters}    
+  <div className="board">
+    {letters}    
   </div>
 )
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Header = () => (
-  <div className="header" style={{height: "11vh"}}>
+  <div className="header">
     Header
   </div>
 )

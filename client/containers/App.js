@@ -9,16 +9,17 @@ import Footer from './Footer.js'
 
 
 const App = () => (
-  <div className="main-wrapper" style={{backgroundColor: "#3c4da9", minHeight: "100vh"}}>
+  <div className="main-wrapper">
     <Helmet>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="stylesheet" href="/bootstrap.min.css" />
+      <link rel="stylesheet" href="/style.css" />
       <title>reSolve Wordseeker</title>
     </Helmet>
 
     <Header />
 
-    <div style={{minHeight: "81vh"}}>
+    <div className="main-containers">
       <Rating />
       <Field />
       <Chat />
