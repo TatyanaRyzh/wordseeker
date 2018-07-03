@@ -214,6 +214,18 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@babel/node@^7.0.0-beta.51":
+  version "7.0.0-beta.51"
+  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.0.0-beta.51.tgz#fe6f4507b5633b822892be854c24c684c6606c18"
+  dependencies:
+    "@babel/polyfill" "7.0.0-beta.51"
+    "@babel/register" "7.0.0-beta.51"
+    commander "^2.8.1"
+    fs-readdir-recursive "^1.0.0"
+    lodash "^4.17.5"
+    output-file-sync "^2.0.0"
+    v8flags "^3.1.1"
+
 "@babel/parser@7.0.0-beta.51":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.51.tgz#27cec2df409df60af58270ed8f6aa55409ea86f6"
@@ -694,6 +706,13 @@
     "@babel/helper-regex" "7.0.0-beta.51"
     regexpu-core "^4.1.3"
 
+"@babel/polyfill@7.0.0-beta.51":
+  version "7.0.0-beta.51"
+  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.0.0-beta.51.tgz#f880a16825571729dceeb76a9bbe74c06321e756"
+  dependencies:
+    core-js "^2.5.7"
+    regenerator-runtime "^0.11.1"
+
 "@babel/preset-env@^7.0.0-beta.49":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.0.0-beta.51.tgz#5b580e6e9e8304166c1317017e863c06dcfc04a2"
@@ -796,7 +815,7 @@
     "@babel/plugin-syntax-dynamic-import" "7.0.0-beta.51"
     "@babel/plugin-syntax-import-meta" "7.0.0-beta.51"
 
-"@babel/register@^7.0.0-beta.49":
+"@babel/register@7.0.0-beta.51", "@babel/register@^7.0.0-beta.49":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.0.0-beta.51.tgz#31a6d27f124cc7a2a0a603b65d23d5644b979aa0"
   dependencies:
@@ -808,7 +827,7 @@
     pirates "^3.0.1"
     source-map-support "^0.4.2"
 
-"@babel/runtime@^7.0.0-beta.49":
+"@babel/runtime@^7.0.0-beta.49", "@babel/runtime@^7.0.0-beta.51":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.51.tgz#48b8ed18307034c6620f643514650ca2ccc0165a"
   dependencies:
@@ -3570,6 +3589,12 @@ home-or-tmp@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-3.0.0.tgz#57a8fe24cf33cdd524860a15821ddc25c86671fb"
 
+homedir-polyfill@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.1.tgz#4c2bbc8a758998feebf5ed68580f76d46768b4bc"
+  dependencies:
+    parse-passwd "^1.0.0"
+
 hosted-git-info@^2.1.4:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.6.1.tgz#6e4cee78b01bb849dcf93527708c69fdbee410df"
@@ -5219,6 +5244,10 @@ parse-json@^2.2.0:
   resolved "https://registry.yarnpkg.com/parse-json/-/parse-json-2.2.0.tgz#f480f40434ef80741f8469099f8dea18f55a4dc9"
   dependencies:
     error-ex "^1.2.0"
+
+parse-passwd@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
 
 parse5@4.0.0:
   version "4.0.0"
@@ -7143,6 +7172,12 @@ utils-merge@1.0.1:
 uuid@^3.1.0, uuid@^3.2.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
+
+v8flags@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-3.1.1.tgz#42259a1461c08397e37fe1d4f1cfb59cad85a053"
+  dependencies:
+    homedir-polyfill "^1.0.1"
 
 val-loader@^1.1.0:
   version "1.1.1"

@@ -379,5 +379,4 @@ export default [
     "editor",
     "exit",
     "command"
-    
     ]
