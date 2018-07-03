@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Letter = () => (
-  <div className="letter">
-    b
-  </div>
+const Letter = ({ value }) => (
+    <div className="letter">
+        {value}
+    </div>
 )
 
 export default Letter

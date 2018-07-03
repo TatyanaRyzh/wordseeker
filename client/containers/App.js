@@ -6,8 +6,6 @@ import Field from './Field.js'
 import Chat from './Chat.js'
 import Footer from './Footer.js'
 
-
-
 const App = () => (
   <div className="main-wrapper">
     <Helmet>
