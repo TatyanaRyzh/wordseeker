@@ -7,6 +7,7 @@ import Chat from './Chat.js'
 import Footer from './Footer.js'
 
 
+
 const App = () => (
   <div className="main-wrapper" style={{backgroundColor: "#3c4da9", minHeight: "100vh"}}>
     <Helmet>
