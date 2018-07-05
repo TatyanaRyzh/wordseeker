@@ -5,6 +5,7 @@ import Rating from './Rating.js'
 import Field from './Field.js'
 import Chat from './Chat.js'
 import Footer from './Footer.js'
+import Modal from '../components/Modal.js'
 
 const App = () => (
   <div className="main-wrapper">
@@ -16,8 +17,9 @@ const App = () => (
     </Helmet>
 
     <Header />
-
+    
     <div className="main-containers">
+      <Modal /> 
       <Rating />
       <Field />
       <Chat />
