@@ -17,6 +17,7 @@
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.0",
     "react-helmet": "^5.2.0",
+    "resolve-redux": "0.12.1",
     "redux": "^3.7.2",
     "resolve-scripts": "0.12.1"
   },

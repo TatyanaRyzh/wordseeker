@@ -1,35 +1,31 @@
 import React from 'react'
 import Letter from './Letter.js'
 
+import { connectViewModel } from 'resolve-redux'
 
 const Board = ({ board }) => {
-    const size = 12;
-    let letters = [];
+  if (!Array.isArray(board)) return null
+  const size = 12
+  let letters = []
 
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
-            letters.push(<Letter key={size * i + (j + 1)} value={board[i][j]} />);
-        }
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      letters.push(<Letter key={size * i + (j + 1)} value={board[i][j]} />)
     }
+  }
 
-    return (
-        <div className="board">
-            {letters}
-        </div>
-    )
+  return <div className="board">{letters}</div>
 }
 
-// export default Board
+const viewModelName = 'board'
+const aggregateId = '*'
 
-export default () => {
-    let arr = [];
-    for (let i = 0; i < 12; i++) {
-        let arr2 = [];
-        for (let j = 0; j < 12; j++) {
-            arr2.push('a');
-        }
-        arr.push(arr2);
-    }
+const mapStateToProps = state => ({
+  viewModelName,
+  aggregateId,
+  board: !!state.viewModels[viewModelName][aggregateId]
+    ? state.viewModels[viewModelName][aggregateId].board
+    : null
+})
 
-    return (<Board board={arr} />)
-}
+export default connectViewModel(mapStateToProps)(Board)
