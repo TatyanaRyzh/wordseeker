@@ -110,8 +110,6 @@ class Board extends React.Component {
         return (
             <div className="board">
                 {letters}
-                {selectedWords}
-                {console.log(selectedWords)}
             </div>
         )
     }
