@@ -1,11 +1,14 @@
+import { connectViewModel } from 'resolve-redux'
+
 import React from 'react'
 import Letter from './Letter.js'
+
+const viewModelName = 'board';
+const aggregateId = '*';
 
 const SIZE = 12;
 const LETTER_SIZE = 6.1;
 const DIMENTION = "vh";
-
-
 
 function defineForm(points) {
     let firstX = points[0].x;
@@ -47,74 +50,42 @@ function selectWord(word) {
     </div>);
 }
 
-class Board extends React.Component {
-    constructor(props) {
-        super(props);
+const Board = ({ board, selectedWords }) => {
+    let letters = [];
+    let selectedWordsMarkup = [];
 
-        this.state = {
+    if (!Array.isArray(board)) return null;
+
+    for (let cell = 0; cell < SIZE; cell++) {
+        for (let row = 0; row < SIZE; row++) {
+            letters.push(<Letter key={SIZE * cell + (row + 1)} value={board[cell][row]} />);
         }
     }
-    componentDidMount() {
-        window.onresize = () => {
-        };
+
+    for (let i = 0; i < selectedWords.length; i++) {
+        selectedWordsMarkup.push(selectWord(selectedWords[i]));
     }
 
-
-    render() {
-        let letters = [];
-        let board = this.props.board;
-        let points = this.props.points;
-        let points2 = this.props.points2;
-        let test = this.props.test;
-
-        for (let cell = 0; cell < SIZE; cell++) {
-            for (let row = 0; row < SIZE; row++) {
-                if (cell === points[0].y && row === points[0].x) {
-                    letters.push(<Letter key={SIZE * cell + (row + 1)} value={board[cell][row]} points={points} />);
-                } else {
-                    letters.push(<Letter key={SIZE * cell + (row + 1)} value={board[cell][row]} />);
-                }
-            }
-        }
-        let selectedWords = [];
-        for (let num = 0; num < 4; num++) {
-            selectedWords.push(selectWord(test[num]));
-        }
-
-        return (
-            <div className="board">
-                {letters}
-                {selectedWords}
-            </div>
-        )
-    }
+    return (
+        <div className="board">
+            {letters}
+            {selectedWordsMarkup}
+        </div>
+    )
 }
 
-// export default Board
-
-export default () => {
-    let arr = [];
-
-    for (let i = 0; i < 12; i++) {
-        let arr2 = [];
-        for (let j = 0; j < 12; j++) {
-            arr2.push('a');
-        }
-        arr.push(arr2);
-    }
-    let points = [{ x: 3, y: 4 }, { x: 3, y: 5 }, { x: 3, y: 6 }, { x: 3, y: 7 }];
-    let points2 = [{ x: 5, y: 6 }, { x: 5, y: 7 }, { x: 5, y: 8 }, { x: 5, y: 9 }];
-
-    let test = [
+const mapStateToProps = state => ({
+    viewModelName,
+    aggregateId,
+    board: !!state.viewModels[viewModelName][aggregateId]
+      ? state.viewModels[viewModelName][aggregateId].board
+      : null,
+      selectedWords:  [
         { coords: [{ x: 5, y: 6 }, { x: 5, y: 7 }, { x: 5, y: 8 }, { x: 5, y: 9 }], isMine: true },
         { coords: [{ x: 10, y: 4 }, { x: 10, y: 3 }, { x: 10, y: 2 }, { x: 10, y: 1 }], isMine: false },
         { coords: [{ x: 6, y: 1 }, { x: 7, y: 1 }, { x: 8, y: 1 }, { x: 9, y: 1 }, { x: 10, y: 1 }], isMine: true },
         { coords: [{ x: 6, y: 11 }, { x: 5, y: 11 }, { x: 4, y: 11 }, { x: 3, y: 11 }, { x: 2, y: 11 }, { x: 1, y: 11 }], isMine: false }
-    ];
-
-    return (
-        <div>
-            <Board board={arr} points2={points2} points={points} test={test} />
-        </div>
-    )
-}
+    ]
+  })
+  
+  export default connectViewModel(mapStateToProps)(Board)
