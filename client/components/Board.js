@@ -49,6 +49,9 @@ function selectWord(word) {
     let translateY = form[1] === "positive" ? points[0].y : points[points.length - 1].y;
     let wordLength = LETTER_SIZE * points.length + DIMENTION;
 
+    console.log(form[0]);
+    console.log(form[1]);
+
     if (form[0] === "diagonal1") {
         let scaleLength = Math.sqrt(Math.pow(LETTER_SIZE, 2) + Math.pow(LETTER_SIZE, 2)) * points.length;
         let rotation = 45;
@@ -66,7 +69,66 @@ function selectWord(word) {
             }}>
         </div>);
         }
+        if (form[1] === "negative") {
+                return (<div className="word"
+                style={{
+                    position: "absolute",
+                    width: scaleLength + DIMENTION,
+                    height: LETTER_SIZE + DIMENTION,
+                    backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
+                    borderRadius: "30px",
+                    opacity: "0.35",
+                    transformOrigin: "left center",
+                    transform: "translate(calc(6.1vh * " + translateX  + "), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
+                }}>
+            </div>);
+            }
     }
+
+    if (form[0] === "diagonal2") {
+        let scaleLength = Math.sqrt(Math.pow(LETTER_SIZE, 2) + Math.pow(LETTER_SIZE, 2)) * points.length;
+        let rotation = 135;
+        if (form[1] === "positive") {
+            return (<div className="word"
+            style={{
+                position: "absolute",
+                width: scaleLength + DIMENTION,
+                height: LETTER_SIZE + DIMENTION,
+                backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
+                borderRadius: "30px",
+                opacity: "0.35",
+                transformOrigin: "left center",
+                transform: "translate(calc((6.1vh * " + translateX  + ") + " + LETTER_SIZE + "vh), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
+            }}>
+        </div>);
+        }
+        if (form[1] === "negative") {
+            return (<div className="word"
+            style={{
+                position: "absolute",
+                width: scaleLength + DIMENTION,
+                height: LETTER_SIZE + DIMENTION,
+                backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
+                borderRadius: "30px",
+                opacity: "0.35",
+                transformOrigin: "left center",
+                transform: "translate(calc((6.1vh * " + translateX  + ") + " + LETTER_SIZE + "vh), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
+            }}>
+        </div>);
+        }
+    }
+
+    /*return (<div className="word"
+        style={{
+            position: "absolute",
+            width: form[0] === "vertical" ? LETTER_SIZE + DIMENTION : wordLength,
+            height: form[0] === "vertical" ? wordLength : LETTER_SIZE + DIMENTION,
+            backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
+            borderRadius: "30px",
+            opacity: "0.35",
+            transform: "translate(calc(" + LETTER_SIZE + DIMENTION + " * " + translateX + "), calc(" + LETTER_SIZE + DIMENTION + " * " + translateY + "))"
+        }}>
+    </div>);*/
         
 }
 
@@ -100,15 +162,19 @@ const mapStateToProps = state => ({
     board: !!state.viewModels[viewModelName][aggregateId]
       ? state.viewModels[viewModelName][aggregateId].board
       : null,
+      //Normal words
       /*selectedWords:  [
         { coords: [{ x: 5, y: 6 }, { x: 5, y: 7 }, { x: 5, y: 8 }, { x: 5, y: 9 }], isMine: true },
         { coords: [{ x: 10, y: 4 }, { x: 10, y: 3 }, { x: 10, y: 2 }, { x: 10, y: 1 }], isMine: false },
         { coords: [{ x: 6, y: 1 }, { x: 7, y: 1 }, { x: 8, y: 1 }, { x: 9, y: 1 }, { x: 10, y: 1 }], isMine: true },
         { coords: [{ x: 6, y: 11 }, { x: 5, y: 11 }, { x: 4, y: 11 }, { x: 3, y: 11 }, { x: 2, y: 11 }, { x: 1, y: 11 }], isMine: false }
     ]*/
+    //Diagonal words
     selectedWords : [
         { coords: [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }], isMine: true },
-        { coords: [{ x: 4, y: 4 }, { x: 3, y: 5 }, { x: 2, y: 6 }, { x: 1, y: 7 }], isMine: true }
+        { coords: [{ x: 6, y: 6 }, { x: 5, y: 7 }, { x: 4, y: 8 }, { x: 3, y: 9 }], isMine: true },
+        { coords: [{ x: 10, y: 10 }, { x: 9, y: 9 }, { x: 8, y: 8 }, { x: 7, y: 7 }], isMine: false },
+        { coords: [{ x: 4, y: 4 }, { x: 5, y: 3 }, { x: 6, y: 2 }, { x: 7, y: 1 }], isMine: false }
     ]
   })
   
