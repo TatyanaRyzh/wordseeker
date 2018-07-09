@@ -1,77 +1,49 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Letter from './Letter.js'
 
-const size = 12;
-let letters = [];
+const SIZE = 12;
+const LETTER_SIZE = 6.1;
+const DIMENTION = "vh";
 
-function defenitionForm(points) {
-    if (points[0].x == points[1].x && points[0].y < points[1].y) {
-        return "vertical+"
-    } else if (points[0].x < points[1].x && points[0].y == points[1].y) {
-        return "horizontal+"
-    } else if (points[0].x == points[1].x && points[0].y > points[1].y) {
-        return "vertical-"
-    } else if (points[0].x > points[1].x && points[0].y == points[1].y) {
-        return "horizontal-"
+
+
+function defineForm(points) {
+    let firstX = points[0].x;
+    let firstY = points[0].y;
+    let secondX = points[1].x;
+    let secondY = points[1].y;
+    let position;
+    let direction;
+
+    if (firstX === secondX) {
+        position = "vertical";
+        direction = firstY < secondY ? "positive" : "negative";
+    } else {
+        position = "horizontal";
+        direction = firstX < secondX ? "positive" : "negative";
     }
+
+    return [position, direction];
 }
 
-function select(points) {
-    switch (defenitionForm(points)) {
-        case "vertical+":
-            return (<div className="word"
-                style={{
-                    position: "absolute",
-                    width: "calc(" + 4 * (points[points.length - 1].x - points[0].x + 1) + "vw - 20px)",
-                    height: 6 * (points[points.length - 1].y - points[0].y + 1) + "vh",
-                    backgroundColor: "#3c4da9",
-                    borderRadius: "30px",
-                    opacity: "0.35",
-                    transform: "translate(calc(4vw * " + points[0].x + " + 10px), calc(6vh * " + points[0].y + "))"
-                }}>
-            </div>);
-        case "vertical-":
-            return (<div className="word"
-                style={{
-                    position: "absolute",
-                    width: "calc(" + 4 * (points[points.length - 1].x - points[0].x + 1) + "vw - 20px)",
-                    height: 6 * (points[0].y - points[points.length - 1
-                    ].y + 1) + "vh",
-                    backgroundColor: "#3c4da9",
-                    borderRadius: "30px",
-                    opacity: "0.35",
-                    transform: "translate(calc(4vw * " + points[points.length - 1].x + " + 10px), calc(6vh * " + points[points.length - 1].y + "))"
-                }}>
-            </div>);
-        case "horizontal+":
-            return (<div className="word"
-                style={{
-                    position: "absolute",
-                    width: 4 * (points[points.length - 1].x - points[0].x + 1) + "vw",
-                    height: 6 * (points[points.length - 1].y - points[0].y + 1) + "vh",
-                    backgroundColor: "#3c4da9",
-                    borderRadius: "30px",
-                    opacity: "0.35",
-                    transform: "translate(calc(4vw * " + points[0].x + "), calc(6vh * " + points[0].y + "))"
-                }}>
-            </div>);
-        case "horizontal-":
-            return (<div className="word"
-                style={{
-                    position: "absolute",
-                    width: 4 * (points[0].x - points[points.length - 1].x + 1) + "vw",
-                    height: 6 * (points[points.length - 1].y - points[0].y + 1) + "vh",
-                    backgroundColor: "#3c4da9",
-                    borderRadius: "30px",
-                    opacity: "0.35",
-                    transform: "translate(calc(4vw * " + points[points.length - 1].x + "), calc(6vh * " + points[points.length - 1].y + "))"
-                }}>
-            </div>);
-        default:
-            break;
-    }
+function selectWord(points) {
+    let form = defineForm(points);
 
+    let translateX = form[1] === "positive" ? points[0].x : points[points.length - 1].x;
+    let translateY = form[1] === "positive" ? points[0].y : points[points.length - 1].y;
+    let wordLength = LETTER_SIZE * points.length + DIMENTION;
+    
+    return (<div className="word"
+        style={{
+            position: "absolute",
+            width: form[0] === "vertical" ? LETTER_SIZE + DIMENTION : wordLength,
+            height: form[0] === "vertical" ? wordLength : LETTER_SIZE + DIMENTION,
+            backgroundColor: "#3c4da9",
+            borderRadius: "30px",
+            opacity: "0.35",
+            transform: "translate(calc(" + LETTER_SIZE + DIMENTION + " * " + translateX + "), calc(" + LETTER_SIZE + DIMENTION + " * " + translateY + "))"
+        }}>
+    </div>);
 }
 
 class Board extends React.Component {
@@ -88,28 +60,30 @@ class Board extends React.Component {
 
 
     render() {
+        let letters = [];
         let board = this.props.board;
         let points = this.props.points;
         let points2 = this.props.points2;
         let test = this.props.test;
 
-        for (let cell = 0; cell < size; cell++) {
-            for (let row = 0; row < size; row++) {
+        for (let cell = 0; cell < SIZE; cell++) {
+            for (let row = 0; row < SIZE; row++) {
                 if (cell === points[0].y && row === points[0].x) {
-                    letters.push(<Letter key={size * cell + (row + 1)} value={board[cell][row]} points={points} />);
+                    letters.push(<Letter key={SIZE * cell + (row + 1)} value={board[cell][row]} points={points} />);
                 } else {
-                    letters.push(<Letter key={size * cell + (row + 1)} value={board[cell][row]} />);
+                    letters.push(<Letter key={SIZE * cell + (row + 1)} value={board[cell][row]} />);
                 }
             }
         }
         let selectedWords = [];
         for (let num = 0; num < 4; num++) {
-            selectedWords.push(select(test[num]));
+            selectedWords.push(selectWord(test[num]));
         }
 
         return (
             <div className="board">
                 {letters}
+                {selectedWords}
             </div>
         )
     }
@@ -137,7 +111,7 @@ export default () => {
 
     return (
         <div>
-            <Board board={arr} points2={points2} points={points} test={test}/>
+            <Board board={arr} points2={points2} points={points} test={test} />
         </div>
     )
 }
