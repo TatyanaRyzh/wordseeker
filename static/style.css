@@ -47,9 +47,11 @@
 }
 
 .board{
+    /*position: relative;*/
     width: 100%; 
     float: left;  
     height: 73vh;
+    user-select: none;
 }
 
 .letter{
