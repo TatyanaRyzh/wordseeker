@@ -113,7 +113,7 @@ const mapStateToProps = state => ({
     viewModelName,
     aggregateId,
     board: !!state.viewModels[viewModelName][aggregateId]
-        ? state.viewModels[viewModelName][aggregateId].board
+        ? state.viewModels[viewModelName][aggregateId].square
         : null,
     selectedWords: [
         { coords: [{ x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }], isMine: true }, //hor pos
