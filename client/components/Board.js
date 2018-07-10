@@ -3,6 +3,7 @@ import { connectViewModel } from 'resolve-redux'
 import React from 'react'
 import Letter from './Letter.js'
 
+
 const viewModelName = 'board';
 const aggregateId = '*';
 
@@ -10,126 +11,78 @@ const SIZE = 12;
 const LETTER_SIZE = 6.1;
 const DIMENTION = "vh";
 
+
 function defineForm(points) {
     let firstX = points[0].x;
     let firstY = points[0].y;
     let secondX = points[1].x;
     let secondY = points[1].y;
-    let position;
-    let direction;
+
+    let direction = "positive";
+    let angle = 90;
 
     if (firstX === secondX) {
-        position = "vertical";
         direction = firstY < secondY ? "positive" : "negative";
     } else if (firstY === secondY) {
-        position = "horizontal";
+        angle = 0;
         direction = firstX < secondX ? "positive" : "negative";
     } else if ((firstX < secondX) && (firstY < secondY)) {
-        position = "diagonal1";
-        direction =  "positive";
+        angle = 45;
+        direction = "positive";
     } else if ((firstX > secondX) && (firstY > secondY)) {
-        position = "diagonal1";
-        direction =  "negative";
+        angle = 45;
+        direction = "negative";
     } else if ((firstX > secondX) && (firstY < secondY)) {
-        position = "diagonal2";
-        direction =  "positive";
+        angle = 135;
+        direction = "positive";
     } else if ((firstX < secondX) && (firstY > secondY)) {
-        position = "diagonal2";
-        direction =  "negative";
+        angle = 135;
+        direction = "negative";
     }
-
-    return [position, direction];
+    return { direction: direction, angle: angle };
 }
 
-function selectWord(word) {
+function selectWord(word, index) {
     let points = word.coords;
     let form = defineForm(points);
+    let angle = form.angle;
+    let direction = form.direction;
+    let length = points.length;
 
-    let translateX = form[1] === "positive" ? points[0].x : points[points.length - 1].x;
-    let translateY = form[1] === "positive" ? points[0].y : points[points.length - 1].y;
-    let wordLength = LETTER_SIZE * points.length + DIMENTION;
+    let wordWidth = angle === 0 ? LETTER_SIZE * length : LETTER_SIZE;
+    let wordHeight = angle === 0 ? LETTER_SIZE : LETTER_SIZE * length;
+    
+    let translateX = direction === "positive" ? points[0].x : points[length - 1].x;
+    let translateY = direction === "positive" ? points[0].y : points[length - 1].y;
 
-    console.log(form[0]);
-    console.log(form[1]);
+    let marginY = 0;
+    let marginX = 0;
 
-    if (form[0] === "diagonal1") {
-        let scaleLength = Math.sqrt(Math.pow(LETTER_SIZE, 2) + Math.pow(LETTER_SIZE, 2)) * points.length;
-        let rotation = 45;
-        if (form[1] === "positive") {
-            return (<div className="word"
-            style={{
-                position: "absolute",
-                width: scaleLength + DIMENTION,
-                height: LETTER_SIZE + DIMENTION,
-                backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
-                borderRadius: "30px",
-                opacity: "0.35",
-                transformOrigin: "left center",
-                transform: "translate(calc(6.1vh * " + translateX  + "), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
-            }}>
-        </div>);
-        }
-        if (form[1] === "negative") {
-                return (<div className="word"
-                style={{
-                    position: "absolute",
-                    width: scaleLength + DIMENTION,
-                    height: LETTER_SIZE + DIMENTION,
-                    backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
-                    borderRadius: "30px",
-                    opacity: "0.35",
-                    transformOrigin: "left center",
-                    transform: "translate(calc(6.1vh * " + translateX  + "), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
-                }}>
-            </div>);
-            }
-    }
-
-    if (form[0] === "diagonal2") {
-        let scaleLength = Math.sqrt(Math.pow(LETTER_SIZE, 2) + Math.pow(LETTER_SIZE, 2)) * points.length;
-        let rotation = 135;
-        if (form[1] === "positive") {
-            return (<div className="word"
-            style={{
-                position: "absolute",
-                width: scaleLength + DIMENTION,
-                height: LETTER_SIZE + DIMENTION,
-                backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
-                borderRadius: "30px",
-                opacity: "0.35",
-                transformOrigin: "left center",
-                transform: "translate(calc((6.1vh * " + translateX  + ") + " + LETTER_SIZE + "vh), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
-            }}>
-        </div>);
-        }
-        if (form[1] === "negative") {
-            return (<div className="word"
-            style={{
-                position: "absolute",
-                width: scaleLength + DIMENTION,
-                height: LETTER_SIZE + DIMENTION,
-                backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
-                borderRadius: "30px",
-                opacity: "0.35",
-                transformOrigin: "left center",
-                transform: "translate(calc((6.1vh * " + translateX  + ") + " + LETTER_SIZE + "vh), calc((6.1vh * " + translateY  + ") - " + LETTER_SIZE / 2 + "vh)) rotate(" + rotation + "deg)"
-            }}>
-        </div>);
+    if (angle === 45 || angle === 135) {
+        wordWidth = Math.sqrt(Math.pow(LETTER_SIZE, 2) + Math.pow(LETTER_SIZE, 2)) * length;
+        wordHeight = LETTER_SIZE;
+        marginY = LETTER_SIZE / 2;
+        if (angle === 135) {
+            marginX = LETTER_SIZE;
         }
     }
 
-    /*return (<div className="word"
+    angle = angle === 90 ? 0 : angle;
+    translateX = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateX + " - " + marginX + DIMENTION + ")";
+    translateY = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateY + " - " + marginY + DIMENTION + ")";
+
+    return (<div className="word" key={index}
         style={{
             position: "absolute",
-            width: form[0] === "vertical" ? LETTER_SIZE + DIMENTION : wordLength,
-            height: form[0] === "vertical" ? wordLength : LETTER_SIZE + DIMENTION,
+            width: wordWidth + DIMENTION,
+            height: wordHeight + DIMENTION,
             backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
             borderRadius: "30px",
             opacity: "0.35",
-            transform: "translate(calc(" + LETTER_SIZE + DIMENTION + " * " + translateX + "), calc(" + LETTER_SIZE + DIMENTION + " * " + translateY + "))"
+            transformOrigin: "left center",
+            transform: "translate(" + translateX + ", " + translateY + ") rotate(" + angle + "deg)"
         }}>
-    </div>);*/
-        
+    </div>);
 }
 
 const Board = ({ board, selectedWords }) => {
@@ -145,7 +98,7 @@ const Board = ({ board, selectedWords }) => {
     }
 
     for (let i = 0; i < selectedWords.length; i++) {
-        selectedWordsMarkup.push(selectWord(selectedWords[i]));
+        selectedWordsMarkup.push(selectWord(selectedWords[i], i));
     }
 
     return (
@@ -160,22 +113,18 @@ const mapStateToProps = state => ({
     viewModelName,
     aggregateId,
     board: !!state.viewModels[viewModelName][aggregateId]
-      ? state.viewModels[viewModelName][aggregateId].board
-      : null,
-      //Normal words
-      /*selectedWords:  [
-        { coords: [{ x: 5, y: 6 }, { x: 5, y: 7 }, { x: 5, y: 8 }, { x: 5, y: 9 }], isMine: true },
-        { coords: [{ x: 10, y: 4 }, { x: 10, y: 3 }, { x: 10, y: 2 }, { x: 10, y: 1 }], isMine: false },
-        { coords: [{ x: 6, y: 1 }, { x: 7, y: 1 }, { x: 8, y: 1 }, { x: 9, y: 1 }, { x: 10, y: 1 }], isMine: true },
-        { coords: [{ x: 6, y: 11 }, { x: 5, y: 11 }, { x: 4, y: 11 }, { x: 3, y: 11 }, { x: 2, y: 11 }, { x: 1, y: 11 }], isMine: false }
-    ]*/
-    //Diagonal words
-    selectedWords : [
-        { coords: [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }], isMine: true },
-        { coords: [{ x: 6, y: 6 }, { x: 5, y: 7 }, { x: 4, y: 8 }, { x: 3, y: 9 }], isMine: true },
-        { coords: [{ x: 10, y: 10 }, { x: 9, y: 9 }, { x: 8, y: 8 }, { x: 7, y: 7 }], isMine: false },
-        { coords: [{ x: 4, y: 4 }, { x: 5, y: 3 }, { x: 6, y: 2 }, { x: 7, y: 1 }], isMine: false }
+        ? state.viewModels[viewModelName][aggregateId].board
+        : null,
+    selectedWords: [
+        { coords: [{ x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }], isMine: true }, //hor pos
+        { coords: [{ x: 6, y: 3 }, { x: 5, y: 3 }, { x: 4, y: 2 }, { x: 3, y: 3 }, { x: 2, y: 3 }], isMine: false }, // hor neg
+        { coords: [{ x: 3, y: 7 }, { x: 3, y: 8 }, { x: 3, y: 9 }], isMine: true }, //ver pos
+        { coords: [{ x: 9, y: 4 }, { x: 9, y: 3 }, { x: 9, y: 2 }, { x: 9, y: 1 }], isMine: false }, // ver neg
+        { coords: [{ x: 6, y: 5 }, { x: 7, y: 6 }, { x: 8, y: 7 }, {x: 9, y: 8}, {x: 10, y: 9}], isMine: true }, //45 pos
+        { coords: [{ x: 10, y: 10 }, { x: 9, y: 9 }, { x: 8, y: 8 }], isMine: false }, // 45 neg
+        { coords: [{ x: 6, y: 5 }, { x: 5, y: 6 }, { x: 4, y: 7 }, {x: 3, y: 8}, {x: 2, y: 9}], isMine: true }, //135 pos
+        { coords: [{ x: 2, y: 8 }, { x: 3, y: 7 }, { x: 4, y: 6 }], isMine: false } // 135 neg
     ]
-  })
-  
-  export default connectViewModel(mapStateToProps)(Board)
+})
+
+export default connectViewModel(mapStateToProps)(Board)

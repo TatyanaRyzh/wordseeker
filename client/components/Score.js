@@ -12,8 +12,7 @@ const Score = () => (
         </div>
     </div>
 
-    <div className="underline">  
-    </div>
+    <div className="underline"></div>
 
   </div>
 )
