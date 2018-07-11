@@ -3,6 +3,7 @@ import { connectViewModel } from 'resolve-redux'
 import React from 'react'
 import Letter from './Letter.js'
 
+
 const viewModelName = 'board';
 const aggregateId = 'root';
 
@@ -10,42 +11,76 @@ const SIZE = 12;
 const LETTER_SIZE = 6.1;
 const DIMENTION = "vh";
 
+
 function defineForm(points) {
     let firstX = points[0].x;
     let firstY = points[0].y;
     let secondX = points[1].x;
     let secondY = points[1].y;
-    let position;
-    let direction;
+
+    let direction = "positive";
+    let angle = 90;
 
     if (firstX === secondX) {
-        position = "vertical";
         direction = firstY < secondY ? "positive" : "negative";
-    } else {
-        position = "horizontal";
+    } else if (firstY === secondY) {
+        angle = 0;
         direction = firstX < secondX ? "positive" : "negative";
+    } else if ((firstX < secondX) && (firstY < secondY)) {
+        angle = 45;
+        direction = "positive";
+    } else if ((firstX > secondX) && (firstY > secondY)) {
+        angle = 45;
+        direction = "negative";
+    } else if ((firstX > secondX) && (firstY < secondY)) {
+        angle = 135;
+        direction = "positive";
+    } else if ((firstX < secondX) && (firstY > secondY)) {
+        angle = 135;
+        direction = "negative";
     }
-
-    return [position, direction];
+    return { direction: direction, angle: angle };
 }
 
-function selectWord(word) {
+function selectWord(word, index) {
     let points = word.coords;
     let form = defineForm(points);
+    let angle = form.angle;
+    let direction = form.direction;
+    let length = points.length;
 
-    let translateX = form[1] === "positive" ? points[0].x : points[points.length - 1].x;
-    let translateY = form[1] === "positive" ? points[0].y : points[points.length - 1].y;
-    let wordLength = LETTER_SIZE * points.length + DIMENTION;
+    let wordWidth = angle === 0 ? LETTER_SIZE * length : LETTER_SIZE;
+    let wordHeight = angle === 0 ? LETTER_SIZE : LETTER_SIZE * length;
+    
+    let translateX = direction === "positive" ? points[0].x : points[length - 1].x;
+    let translateY = direction === "positive" ? points[0].y : points[length - 1].y;
 
-    return (<div className="word"
+    let marginY = 0;
+    let marginX = 0;
+
+    if (angle === 45 || angle === 135) {
+        wordWidth = Math.sqrt(Math.pow(LETTER_SIZE, 2) + Math.pow(LETTER_SIZE, 2)) * length;
+        wordHeight = LETTER_SIZE;
+        marginY = LETTER_SIZE / 2;
+        if (angle === 135) {
+            marginX = LETTER_SIZE;
+        }
+    }
+
+    angle = angle === 90 ? 0 : angle;
+    translateX = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateX + " - " + marginX + DIMENTION + ")";
+    translateY = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateY + " - " + marginY + DIMENTION + ")";
+
+    return (<div className="word" key={index}
         style={{
             position: "absolute",
-            width: form[0] === "vertical" ? LETTER_SIZE + DIMENTION : wordLength,
-            height: form[0] === "vertical" ? wordLength : LETTER_SIZE + DIMENTION,
+            width: wordWidth + DIMENTION,
+            height: wordHeight + DIMENTION,
             backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
             borderRadius: "30px",
             opacity: "0.35",
-            transform: "translate(calc(" + LETTER_SIZE + DIMENTION + " * " + translateX + "), calc(" + LETTER_SIZE + DIMENTION + " * " + translateY + "))"
+            transformOrigin: "left center",
+            transform: "translate(" + translateX + ", " + translateY + ") rotate(" + angle + "deg)"
         }}>
     </div>);
 }
@@ -65,7 +100,7 @@ const Board = ({ board, selectedWords, allWordsCount, isLoaded }) => {
     }
 
     for (let i = 0; i < selectedWords.length; i++) {
-        selectedWordsMarkup.push(selectWord(selectedWords[i]));
+        selectedWordsMarkup.push(selectWord(selectedWords[i], i));
     }
 
     return (
