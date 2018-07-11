@@ -79,7 +79,7 @@ const buildArr = (
   } = defaultBuildArrOptions
 ) => {
   const words = [...inputWords]
-	
+
   let arr = new Array(h)
   for (let i = 0; i < h; i++) {
     arr[i] = new Array(w)
@@ -96,7 +96,7 @@ const buildArr = (
     let word = words[wordNumber]
     if (boundTryInsertToArr(StCoords, route, word)) {
       words.splice(wordNumber, 1)
-	  addedWords.push(word)
+      addedWords.push(word)
     }
   }
 

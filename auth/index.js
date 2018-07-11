@@ -15,7 +15,7 @@ const routes = [
     path: '/register',
     method: 'POST',
     callback: async (_, username) => {
-        console.log(_, username)
+      console.log(_, username)
       return jwt.sign(
         {
           name: username
@@ -63,4 +63,3 @@ const strategies = options.map(options => ({
 }))
 
 export default strategies
-

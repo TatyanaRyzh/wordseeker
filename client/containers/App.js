@@ -23,7 +23,7 @@ const App = () => (
       <Chat />
     </div>
 
-      <Footer />
+    <Footer />
   </div>
 )
 
