@@ -38,8 +38,8 @@
     font-size: 20px;
     color: #ffffff;
     text-align: center;
-    padding: 33px;
-    font-family: 'Calibri';
+    padding: 40px;
+    font-family: Calibri;
 }
 
 .rating{
@@ -48,7 +48,7 @@
     float: left; 
     margin-left : 1.5vw; 
     height: 81vh; 
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 .board{
