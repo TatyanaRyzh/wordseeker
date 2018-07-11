@@ -5,7 +5,7 @@ import Letter from './Letter.js'
 
 
 const viewModelName = 'board';
-const aggregateId = '*';
+const aggregateId = 'root';
 
 const SIZE = 12;
 const LETTER_SIZE = 6.1;
@@ -85,11 +85,13 @@ function selectWord(word, index) {
     </div>);
 }
 
-const Board = ({ board, selectedWords }) => {
+const Board = ({ board, selectedWords, allWordsCount, isLoaded }) => {
+	if(!isLoaded) {
+		return (<div />)
+	}
+	
     let letters = [];
     let selectedWordsMarkup = [];
-
-    if (!Array.isArray(board)) return null;
 
     for (let cell = 0; cell < SIZE; cell++) {
         for (let row = 0; row < SIZE; row++) {
@@ -109,22 +111,22 @@ const Board = ({ board, selectedWords }) => {
     )
 }
 
-const mapStateToProps = state => ({
-    viewModelName,
-    aggregateId,
-    board: !!state.viewModels[viewModelName][aggregateId]
-        ? state.viewModels[viewModelName][aggregateId].square
-        : null,
-    selectedWords: [
-        { coords: [{ x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }], isMine: true }, //hor pos
-        { coords: [{ x: 6, y: 3 }, { x: 5, y: 3 }, { x: 4, y: 2 }, { x: 3, y: 3 }, { x: 2, y: 3 }], isMine: false }, // hor neg
-        { coords: [{ x: 3, y: 7 }, { x: 3, y: 8 }, { x: 3, y: 9 }], isMine: true }, //ver pos
-        { coords: [{ x: 9, y: 4 }, { x: 9, y: 3 }, { x: 9, y: 2 }, { x: 9, y: 1 }], isMine: false }, // ver neg
-        { coords: [{ x: 6, y: 5 }, { x: 7, y: 6 }, { x: 8, y: 7 }, {x: 9, y: 8}, {x: 10, y: 9}], isMine: true }, //45 pos
-        { coords: [{ x: 10, y: 10 }, { x: 9, y: 9 }, { x: 8, y: 8 }], isMine: false }, // 45 neg
-        { coords: [{ x: 6, y: 5 }, { x: 5, y: 6 }, { x: 4, y: 7 }, {x: 3, y: 8}, {x: 2, y: 9}], isMine: true }, //135 pos
-        { coords: [{ x: 2, y: 8 }, { x: 3, y: 7 }, { x: 4, y: 6 }], isMine: false } // 135 neg
-    ]
-})
+const mapStateToProps = state => {
+	const result = {
+		viewModelName,
+        aggregateId,
+        isLoaded: false
+	}
+	
+	const viewState = state.viewModels[viewModelName][aggregateId]
+	if(viewState && Array.isArray(viewState.square)) {
+		result.board = viewState.square
+		result.selectedWords = viewState.selectedWords
+		result.allWordsCount = viewState.allWordsCount
+		result.isLoaded = true
+	}
+	
+	return result
+}
 
 export default connectViewModel(mapStateToProps)(Board)

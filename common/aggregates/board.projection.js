@@ -1,10 +1,14 @@
+import { SearchWord, CompareWord } from '../../search.js'
+import buildBoard from '../../board.js'
+import words from '../../words.js'
+
 export default {
   Init: () => ({}),
   BUILD_BOARD: (state, { payload: { square, words } }) => {
     return {
         ...state,
         square,
-        allWordsCount: words.length,
+        words,
         selectedWords: []
     }
   },
