@@ -70,7 +70,7 @@ const defaultBuildArrOptions = {
 }
 
 const buildArr = (
-  words,
+  inputWords,
   {
     w = defaultBuildArrOptions.w,
     h = defaultBuildArrOptions.h,
@@ -78,6 +78,8 @@ const buildArr = (
     random = defaultBuildArrOptions.random
   } = defaultBuildArrOptions
 ) => {
+  const words = [...inputWords]
+	
   let arr = new Array(h)
   for (let i = 0; i < h; i++) {
     arr[i] = new Array(w)
@@ -85,6 +87,7 @@ const buildArr = (
   }
 
   const boundTryInsertToArr = tryInsertToArr.bind(null, arr, w, h)
+  const addedWords = []
 
   for (let i = 0; i < 10000; i++) {
     let StCoords = [rInt(h, random), rInt(w, random)]
@@ -93,6 +96,7 @@ const buildArr = (
     let word = words[wordNumber]
     if (boundTryInsertToArr(StCoords, route, word)) {
       words.splice(wordNumber, 1)
+	  addedWords.push(word)
     }
   }
 
@@ -110,7 +114,10 @@ const buildArr = (
     }
   }
 
-  return arr
+  return {
+    square: arr,
+    words: addedWords
+  }
 }
 
 export default buildArr

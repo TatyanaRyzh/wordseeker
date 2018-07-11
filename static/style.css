@@ -10,23 +10,23 @@
 .chat
 {
     background-color: white;
-    width:24.5vw; 
+    width: calc(66.5vw - 75vh);
     float: left; 
-    margin-left: 0.625vw; 
+    margin-left: 1vw; 
     height: 81vh; 
     border-radius: 10px;
 }
 
 .field{
     background-color: white; 
-    width: 50vw; 
+    width: 75vh; 
     float: left; 
-    margin-left: 0.625vw; 
+    margin-left: 1vw; 
     height: 81vh; 
     border-radius: 10px; 
-    padding: 11px; 
+    padding: 1vh; 
     font-size: 28px; 
-    font-family: Calibri;
+    font-family: "Calibri";
 }
 
 .footer{
@@ -44,27 +44,30 @@
 
 .rating{
     background-color: white; 
-    width: 21vw; 
+    width: 28vw; 
     float: left; 
-    margin-left : 1.5vw; 
+    margin-left: 1.5vw; 
     height: 81vh; 
     border-radius: 10px;
 }
 
 .board{
-    width: 100%; 
+    /*position: relative;*/
+    width: 75vh;
     float: left;  
-    height: 73vh;
+    height: 75vh;
+    user-select: none;
 }
 
 .letter{
     float: left; 
-    width: 4vw; 
-    height: 6vh; 
+    width: 6.1vh; 
+    height: 6.1vh; 
     color: #3b3b3b; 
     text-align: center;
     vertical-align: middle;
-    line-height: 6vh
+    line-height: 6.1vh;
+    font-weight: 500;
 }
 
 .score{
@@ -72,6 +75,7 @@
     float: left;  
     height: 6vh; 
     color: #bcbcbc;
+    user-select: none;
 }
 
 .score-component{

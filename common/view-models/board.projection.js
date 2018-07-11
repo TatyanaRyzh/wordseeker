@@ -1,7 +1,7 @@
-import createBoard from '../../board'
+import buildBoard from '../../board'
 import words from '../../words'
 
-const createGameBoard = createBoard.bind(null, words, {
+const buildGameBoard = buildBoard.bind(null, words, {
   w: 12,
   h: 12,
   directions: [
@@ -18,6 +18,6 @@ const createGameBoard = createBoard.bind(null, words, {
 
 export default {
   Init: () => ({
-    board: createGameBoard()
+	  ...(buildGameBoard())
   })
 }
