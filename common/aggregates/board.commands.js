@@ -28,12 +28,13 @@ export default {
 		}
     },
 
-    selectWord: (state, { payload: points }) => {
+    selectWord: (state, { payload: { userId, points } }) => {
         const word = SearchWord(state.square, points) 
         if(CompareWord(state.words, word)) { 
             return { 
                 type: 'SELECT_WORD', 
-                payload: { 
+                payload: {
+                    userId,
                     points, 
                     word
                 }
