@@ -42,6 +42,17 @@
     font-family: Calibri;
 }
 
+input {
+    width: 150px;
+    font-size: 20px;
+    background-color: #3c4da9;
+    border-color: #3c4da9;
+    visibility: visible;
+}
+
+.input:visited { color: #FFFFFF; text-decoration: none; }  
+.input:hover { color: #FFFFFF; text-decoration: none; }
+
 .rating{
     background-color: white; 
     width: 28vw; 
