@@ -1,5 +1,5 @@
-import '@babel/polyfill'
-import words from "./words";
+/*import '@babel/polyfill'*/
+import words from './words'
 
 export function SearchWord (square, points) {
     let word = "";
@@ -12,7 +12,7 @@ export function SearchWord (square, points) {
 export function CompareWord (words, word) {
     let result = false;
     for (let j = 0; j < words.length; j++) {
-        if (word === words[j]) {
+        if (word == words[j]) {
             result = true;
             break;
         }

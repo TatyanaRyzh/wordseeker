@@ -1,23 +1,17 @@
-import buildBoard from '../../board'
-import words from '../../words'
-
-const buildGameBoard = buildBoard.bind(null, words, {
-  w: 12,
-  h: 12,
-  directions: [
-    [0, 1],
-    [-1, 1],
-    [-1, 0],
-    [-1, -1],
-    [0, -1],
-    [1, -1],
-    [1, 0],
-    [1, 1]
-  ]
-})
-
 export default {
-  Init: () => ({
-	  ...(buildGameBoard())
-  })
+  Init: () => ({}),
+  BUILD_BOARD: (state, { payload: { square, words } }) => {
+    return {
+      ...state,
+      square,
+      allWordsCount: words.length,
+      selectedWords: []
+    }
+  },
+  SELECT_WORD: (state, { payload: { points, word } }) => {
+    return {
+      ...state,
+      selectedWords: state.selectedWords.concat({ points, word })
+    }
+  }
 }

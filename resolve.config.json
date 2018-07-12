@@ -9,5 +9,13 @@
       "name": "board",
       "projection": "common/view-models/board.projection.js"
     }
-  ]
+  ],
+  "aggregates": [
+    {
+      "name": "board",
+      "commands": "common/aggregates/board.commands.js",
+	  "projection": "common/aggregates/board.projection.js"
+    }
+  ],
+  "sagas": "common/sagas/index.js",
 }

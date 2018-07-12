@@ -38,9 +38,20 @@
     font-size: 20px;
     color: #ffffff;
     text-align: center;
-    padding: 33px;
-    font-family: 'Calibri';
+    padding: 40px;
+    font-family: Calibri;
 }
+
+input {
+    width: 150px;
+    font-size: 20px;
+    background-color: #3c4da9;
+    border-color: #3c4da9;
+    visibility: visible;
+}
+
+.input:visited { color: #FFFFFF; text-decoration: none; }  
+.input:hover { color: #FFFFFF; text-decoration: none; }
 
 .rating{
     background-color: white; 
@@ -48,7 +59,7 @@
     float: left; 
     margin-left: 1.5vw; 
     height: 81vh; 
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 .board{
