@@ -10,6 +10,11 @@ class Header extends React.PureComponent {
   render() {
     return (
       <div className="header">
+      	<img className="logo" src="./resolve-logo.svg" alt="Resolve logo"></img>
+        <a href="#" className="share-button">
+	        <img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>
+	        <div className="share-text">Share in Twitter</div>
+        </a>
         Hello, 
         <input className="input" onChange={this.onInputChange} value={this.props.username }/>!
       </div>

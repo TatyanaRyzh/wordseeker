@@ -21,46 +21,8 @@ function defineForm(points) {
 
     if (points.length > 1) {
 
-        let lastX = points[points.length - 1].x;
-        let lastY = points[points.length - 1].y;
-        //Hor +
-        if (lastX > points[points.length - 2].x) {
-            let length = lastX - points[0].x;
-            points.splice(1, points.length - 2);
-            for (let i = length - 1; i >= 1; i--) {
-                points.splice(1, 0, { x: points[0].x + i, y: points[0].y });
-            }
-            //Ver +
-        } else if (lastY > points[points.length - 2].y) {
-            let length = lastY - points[0].y;
-            points.splice(1, points.length - 2);
-            for (let i = length - 1; i >= 1; i--) {
-                points.splice(1, 0, { x: points[0].x, y: points[0].y + i });
-            }
-            //Hor -
-        } else if (lastX < points[points.length - 2].x) {
-            let length = points[0].x - lastX;
-            points.splice(1, points.length - 2);
-            for (let i = length - 1; i >= 1; i--) {
-                points.splice(1, 0, { x: points[0].x - i, y: points[0].y });
-            }
-            //Ver - 
-        } else if (lastY < points[points.length - 2].y) {
-            let length = points[0].y - lastY;
-            points.splice(1, points.length - 2);
-            for (let i = length - 1; i >= 1; i--) {
-                points.splice(1, 0, { x: points[0].x, y: points[0].y - i });
-            }
-            //Diag 45 +
-        } else {
-            let length = lastY - points[0].y;
-            points.splice(1, points.length - 2);
-            for (let i = length - 1; i >= 1; i--) {
-                points.splice(1, 0, { x: points[0].x + i, y: points[0].y + i });
-            }
-        }
 
-        //console.log(points);
+
 
         let secondX = points[1].x;
         let secondY = points[1].y;
@@ -84,6 +46,7 @@ function defineForm(points) {
             direction = "negative";
         }
     }
+
 
     return { direction: direction, angle: angle };
 }
@@ -125,6 +88,7 @@ function selectWord(word, index) {
 
     return (<div className="word" key={index}
         style={{
+            pointerEvents: "none",
             position: "absolute",
             width: wordWidth + DIMENTION,
             height: wordHeight + DIMENTION,
@@ -137,13 +101,152 @@ function selectWord(word, index) {
     </div>);
 }
 
+let isSelectingProcess = false
+
+let currentLetterX;
+let currentLetterY;
+
 class Board extends React.Component {
     constructor(props) {
         super(props);
 
+        this.addProcessCoord = this.addProcessCoord.bind(this);
+
         this.state = {
-            coords: []
+            coords: [],
         }
+    }
+
+    addProcessCoord(eventType, coords) {
+        let array = this.state.coords.slice();
+
+        if (eventType === "down") {
+            isSelectingProcess = true;
+            array.push({ x: currentLetterX, y: currentLetterY });
+            this.setState({ coords: array });
+        }
+        if (eventType === "over") {
+
+            currentLetterX = coords.x;
+            currentLetterY = coords.y;
+
+            if (isSelectingProcess) {
+
+                let horParam = currentLetterX - array[0].x;
+                let verParam = currentLetterY - array[0].y;
+
+                if (horParam === 0 && verParam === 0) {
+                    //1 letter
+                    array = [array[0]];
+                } else if (horParam > 0 && verParam === 0) {
+                    //hor+
+                    array = [array[0]];
+                    for (let i = 1; i <= currentLetterX - array[0].x; i++) {
+                        array.push({ x: array[0].x + i, y: currentLetterY });
+                    }
+                    console.log(array)
+                } else if (horParam < 0 && verParam === 0) {
+                    //hor-
+                    array = [array[0]];
+
+                    for (let i = 1; i <= array[0].x - currentLetterX; i++) {
+                        array.push({ x: array[0].x - i, y: currentLetterY });
+                    }
+                } else if (horParam === 0 && verParam > 0) {
+                    //ver+
+                    array = [array[0]];
+                    for (let i = 1; i <= currentLetterY - array[0].y; i++) {
+                        array.push({ x: currentLetterX, y: array[0].y + i });
+                    }
+                    console.log(array)
+                } else if (horParam === 0 && verParam < 0) {
+                    //ver-
+                    array = [array[0]];
+
+                    for (let i = 1; i <= array[0].y - currentLetterY; i++) {
+                        array.push({ x: currentLetterX, y: array[0].y - i });
+                    }
+                } else if (horParam > 0 && verParam > 0) {
+                    //45+
+                } else if (horParam < 0 && verParam < 0) {
+                    //45-
+                } else if (horParam < 0 && verParam > 0) {
+                    //135+
+                } else {
+                    //135-
+                }
+
+                /*  //Hor +
+                  if (currentLetterX > previousX) {
+    
+                      let length = currentLetterX - points[0].x;
+                      points.splice(1, points.length - 2);
+                      for (let i = length - 1; i >= 1; i--) {
+                          points.splice(1, 0, { x: points[0].x + i, y: points[0].y });
+                      }
+                      //Ver +
+                  } else if (currentLetterY > previousY) {
+                      let length = currentLetterY - points[0].y;
+                      points.splice(1, points.length - 2);
+                      for (let i = length - 1; i >= 1; i--) {
+                          points.splice(1, 0, { x: points[0].x, y: points[0].y + i });
+                      }
+                      //Hor -
+                  } else if (currentLetterX < previousX) {
+                      if ((points.length > 3) && (currentLetterX === points[points.length - 3].x)) {
+                          points.splice(-2, 2);
+                      } else {
+                          length = points[0].x - currentLetterX;
+                          points.splice(1, points.length - 2);
+                          for (let i = length - 1; i >= 1; i--) {
+                              points.splice(1, 0, { x: points[0].x - i, y: points[0].y });
+                          }
+                      }
+                      //Ver - 
+                  } else if (currentLetterY < previousY) {
+                      if ((points.length > 3) && (currentLetterY === points[points.length - 3].y)) {
+                          points.splice(-2, 2);
+                      } else {
+                          let length = points[0].y - currentLetterY;
+                          points.splice(1, points.length - 2);
+                          for (let i = length - 1; i >= 1; i--) {
+                              points.splice(1, 0, { x: points[0].x, y: points[0].y - i });
+                          }
+                      }
+                      //Diag 45 +
+                  } else {
+                      let length = currentLetterY - points[0].y;
+                      points.splice(1, points.length - 2);
+                      for (let i = length - 1; i >= 1; i--) {
+                          points.splice(1, 0, { x: points[0].x + i, y: points[0].y + i });
+                      }
+                  }
+    
+    
+    */
+
+
+
+
+                this.setState({ coords: array });
+            }
+        }
+        if (eventType === "up") {
+            isSelectingProcess = false;
+            this.setState({ coords: [] });
+        }
+
+
+
+
+
+
+
+
+        /*if ((points.length === 2) && (points[0].x === points[1].x) && (points[0].y === points[1].y)) {
+            points.splice(1, 1);
+        }*/
+
     }
 
     render() {
@@ -161,13 +264,6 @@ class Board extends React.Component {
         let selectedWordsMarkup = [];
         let index = 0;
 
-        let addProcessCoord = (coords) => {
-            let array = this.state.coords.slice();
-            array.push(coords);
-            this.setState({ coords: array })
-        }
-
-
         if (!Array.isArray(board)) return null;
 
         for (let cell = 0; cell < SIZE; cell++) {
@@ -176,7 +272,7 @@ class Board extends React.Component {
                     key={SIZE * cell + (row + 1)}
                     coords={{ x: row, y: cell }}
                     value={board[cell][row]}
-                    addFunc={addProcessCoord}
+                    addFunc={this.addProcessCoord}
                 />);
             }
         }
@@ -186,7 +282,7 @@ class Board extends React.Component {
         }
 
         return (
-            <div className="board">
+            <div className="board" onMouseDown={() => { this.addProcessCoord("down") }} onMouseUp={() => { this.addProcessCoord("up") }}>
                 {letters}
                 {selectedWordsMarkup}
                 {selectWord({ isMine: true, coords: this.state.coords }, index)}
