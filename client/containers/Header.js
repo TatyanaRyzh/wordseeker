@@ -23,8 +23,14 @@ class Header extends React.PureComponent {
 }
 
 function mapStateToProps(state){
+  const users = state.viewModels.users['*'] || {}
+  let username = state.user.username
+  if(users[state.jwt.userId]) {
+    username = users[state.jwt.userId].username
+  }
+
   return {
-    username: state.user.username
+    username
   }
 }
 
