@@ -184,6 +184,7 @@ class Board extends React.Component {
         }
 
         if (eventType === "up") {
+            // check word !!!
             isSelectingProcess = false;
             this.setState({ coords: [] });
         }

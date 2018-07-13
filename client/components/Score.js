@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import calculatingScore from '../../calculating'
+import calculatingScore from './calculating'
 
 const Score = props => (
   <div className="score">

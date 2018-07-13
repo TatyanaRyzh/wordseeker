@@ -1,6 +1,6 @@
-import { SearchWord, CompareWord } from '../../search.js'
-import buildBoard from '../../board.js'
-import words from '../../words.js'
+import { SearchWord, CompareWord } from '../search.js'
+import buildBoard from '../board.js'
+import words from '../words.js'
 
 export default {
   Init: () => ({}),
