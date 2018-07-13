@@ -14,11 +14,23 @@ const routes = [
   {
     path: '/register',
     method: 'POST',
-    callback: async (_, username) => {
-      console.log(_, username)
+    callback: async (req) => {
+      const username = req.body.username
+      const userId = req.body.userId
+
+      await req.resolve.executeCommand({
+        type: 'createUser',
+        aggregateId: userId,
+        aggregateName: 'user',
+        payload: {
+          username
+        }
+      })
+
       return jwt.sign(
         {
-          name: username
+          username: username,
+          userId: userId
         },
         jwtSecret
       )

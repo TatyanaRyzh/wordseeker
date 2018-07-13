@@ -8,13 +8,22 @@
     {
       "name": "board",
       "projection": "common/view-models/board.projection.js"
+    },
+    {
+      "name": "users",
+      "projection": "common/view-models/users.projection.js"
     }
   ],
   "aggregates": [
     {
       "name": "board",
       "commands": "common/aggregates/board.commands.js",
-	  "projection": "common/aggregates/board.projection.js"
+	    "projection": "common/aggregates/board.projection.js"
+    },
+    {
+      "name": "user",
+      "commands": "common/aggregates/user.commands.js",
+	    "projection": "common/aggregates/user.projection.js"
     }
   ],
   "sagas": "common/sagas/index.js",
