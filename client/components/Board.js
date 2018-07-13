@@ -157,9 +157,9 @@ class Board extends React.Component {
                             array.push({ x: currentLetterX, y: arrayY - i });
                         }
                     }
-                } else if (horLength === verLength) {
+                } else if (Math.abs(horLength) === Math.abs(verLength)) {
                     array = [array[0]];
-console.log(direction, angle)
+                    
                     if (direction === "positive" && angle === 45) {
                         for (let i = 1; i <= currentLetterX - arrayX; i++) {
                             array.push({ x: arrayX + i, y: arrayY + i });
@@ -184,6 +184,7 @@ console.log(direction, angle)
         }
 
         if (eventType === "up") {
+            // check word !!!
             isSelectingProcess = false;
             this.setState({ coords: [] });
         }
