@@ -1,4 +1,5 @@
 import { connectViewModel } from 'resolve-redux'
+import { bindActionCreators } from 'redux'
 
 import React from 'react'
 import Letter from './Letter.js'
@@ -184,7 +185,8 @@ class Board extends React.Component {
         }
 
         if (eventType === "up") {
-            // check word !!!
+            this.props.selectWord(this.props.aggregateId, {userId: '', points: array})
+            console.log("!")
             isSelectingProcess = false;
             this.setState({ coords: [] });
         }
@@ -253,4 +255,8 @@ const mapStateToProps = state => {
     return result
 }
 
-export default connectViewModel(mapStateToProps)(Board)
+
+const mapDispatchToProps = (dispatch, props) =>
+  bindActionCreators(props.aggregateActions, dispatch)
+
+export default connectViewModel(mapStateToProps, mapDispatchToProps)(Board)

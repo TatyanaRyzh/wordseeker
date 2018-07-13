@@ -11,7 +11,10 @@ export default {
   SELECT_WORD: (state, { payload: { points, word } }) => {
     return {
       ...state,
-      selectedWords: state.selectedWords.concat({ points, word })
+      selectedWords: state.selectedWords.concat({
+        coords: points,
+        isMine: true
+      })
     }
   }
 }
