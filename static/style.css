@@ -46,7 +46,7 @@ input {
     width: 150px;
     font-size: 20px;
     background-color: #3647ac;
-    border-color: #3647ac;
+    border: none;
     visibility: visible;
 }
 

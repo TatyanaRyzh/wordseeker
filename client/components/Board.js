@@ -78,7 +78,7 @@ function selectWord(word, index) {
         wordHeight = LETTER_SIZE;
         marginY = LETTER_SIZE / 2;
         if (angle === 135) {
-            marginX = LETTER_SIZE;
+            marginX = -LETTER_SIZE;
         }
     }
 
@@ -131,7 +131,6 @@ class Board extends React.Component {
             currentLetterY = coords.y;
 
             if (isSelectingProcess) {
-
                 let horParam = currentLetterX - array[0].x;
                 let verParam = currentLetterY - array[0].y;
 
@@ -144,7 +143,6 @@ class Board extends React.Component {
                     for (let i = 1; i <= currentLetterX - array[0].x; i++) {
                         array.push({ x: array[0].x + i, y: currentLetterY });
                     }
-                    console.log(array)
                 } else if (horParam < 0 && verParam === 0) {
                     //hor-
                     array = [array[0]];
@@ -158,7 +156,6 @@ class Board extends React.Component {
                     for (let i = 1; i <= currentLetterY - array[0].y; i++) {
                         array.push({ x: currentLetterX, y: array[0].y + i });
                     }
-                    console.log(array)
                 } else if (horParam === 0 && verParam < 0) {
                     //ver-
                     array = [array[0]];
@@ -168,66 +165,37 @@ class Board extends React.Component {
                     }
                 } else if (horParam > 0 && verParam > 0) {
                     //45+
+                    if (horParam - verParam === 0) {
+                        array = [array[0]];
+                        for (let i = 1; i <= currentLetterX - array[0].x; i++) {
+                            array.push({ x: array[0].x + i, y: array[0].y + i });
+                        }
+                    }
                 } else if (horParam < 0 && verParam < 0) {
                     //45-
+                    if (-(horParam - verParam) === 0) {
+                        array = [array[0]];
+                        for (let i = 1; i <= array[0].x - currentLetterX; i++) {
+                            array.push({ x: array[0].x - i, y: array[0].y - i });
+                        }
+                    }
                 } else if (horParam < 0 && verParam > 0) {
                     //135+
+                    if (-horParam - verParam === 0) {
+                        array = [array[0]];
+                        for (let i = 1; i <= array[0].x - currentLetterX ; i++) {
+                            array.push({ x: array[0].x - i, y: array[0].y + i });
+                        }
+                    }
                 } else {
                     //135-
+                    if (horParam - (-verParam) === 0) {
+                        array = [array[0]];
+                        for (let i = 1; i <= currentLetterX - array[0].x; i++) {
+                            array.push({ x: array[0].x + i, y: array[0].y - i });
+                        }
+                    }
                 }
-
-                /*  //Hor +
-                  if (currentLetterX > previousX) {
-    
-                      let length = currentLetterX - points[0].x;
-                      points.splice(1, points.length - 2);
-                      for (let i = length - 1; i >= 1; i--) {
-                          points.splice(1, 0, { x: points[0].x + i, y: points[0].y });
-                      }
-                      //Ver +
-                  } else if (currentLetterY > previousY) {
-                      let length = currentLetterY - points[0].y;
-                      points.splice(1, points.length - 2);
-                      for (let i = length - 1; i >= 1; i--) {
-                          points.splice(1, 0, { x: points[0].x, y: points[0].y + i });
-                      }
-                      //Hor -
-                  } else if (currentLetterX < previousX) {
-                      if ((points.length > 3) && (currentLetterX === points[points.length - 3].x)) {
-                          points.splice(-2, 2);
-                      } else {
-                          length = points[0].x - currentLetterX;
-                          points.splice(1, points.length - 2);
-                          for (let i = length - 1; i >= 1; i--) {
-                              points.splice(1, 0, { x: points[0].x - i, y: points[0].y });
-                          }
-                      }
-                      //Ver - 
-                  } else if (currentLetterY < previousY) {
-                      if ((points.length > 3) && (currentLetterY === points[points.length - 3].y)) {
-                          points.splice(-2, 2);
-                      } else {
-                          let length = points[0].y - currentLetterY;
-                          points.splice(1, points.length - 2);
-                          for (let i = length - 1; i >= 1; i--) {
-                              points.splice(1, 0, { x: points[0].x, y: points[0].y - i });
-                          }
-                      }
-                      //Diag 45 +
-                  } else {
-                      let length = currentLetterY - points[0].y;
-                      points.splice(1, points.length - 2);
-                      for (let i = length - 1; i >= 1; i--) {
-                          points.splice(1, 0, { x: points[0].x + i, y: points[0].y + i });
-                      }
-                  }
-    
-    
-    */
-
-
-
-
                 this.setState({ coords: array });
             }
         }
@@ -235,18 +203,6 @@ class Board extends React.Component {
             isSelectingProcess = false;
             this.setState({ coords: [] });
         }
-
-
-
-
-
-
-
-
-        /*if ((points.length === 2) && (points[0].x === points[1].x) && (points[0].y === points[1].y)) {
-            points.splice(1, 1);
-        }*/
-
     }
 
     render() {
