@@ -11,7 +11,7 @@ class Header extends React.PureComponent {
     return (
       <div className="header">
       	<img className="logo" src="./resolve-logo.svg" alt="Resolve logo"></img>
-        <a href="#" className="share-button">
+        <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" className="share-button" target="_blank">
 	        <img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>
 	        <div className="share-text">Share in Twitter</div>
         </a>
