@@ -1,7 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import calculatingScore from '../../calculating'
+const calcScore = words => {
+  let score = 0
+  for(let i = 0; i < words.length; i++) {
+      if(words[i].isMine) {
+          score += words[i].coords.length
+      }
+  }
+  return score
+}
 
 const Score = props => (
   <div className="score">
@@ -64,7 +72,7 @@ function mapStateToProps(state) {
   ]
 
   return {
-    score: calculatingScore(selectedWords)
+    score: calcScore(selectedWords)
   }
 }
 
