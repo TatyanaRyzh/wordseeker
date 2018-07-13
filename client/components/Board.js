@@ -12,7 +12,7 @@ const LETTER_SIZE = 6.1;
 const DIMENTION = "vh";
 
 
-function defineForm(points) {
+export function defineForm(points) {
     let firstX = points[0].x;
     let firstY = points[0].y;
 
@@ -48,7 +48,7 @@ function defineForm(points) {
     return { direction: direction, angle: angle };
 }
 
-function selectWord(word, index) {
+export function selectWord(word, index) {
     let points = word.coords;
 
     if (!points.length) {
@@ -98,15 +98,14 @@ function selectWord(word, index) {
     </div>);
 }
 
-let isSelectingProcess = false
-let currentLetterX;
-let currentLetterY;
-
-class Board extends React.Component {
+export class Board extends React.Component {
     constructor(props) {
         super(props);
 
         this.addProcessCoord = this.addProcessCoord.bind(this);
+        this.isSelectingProcess = false;
+        this.currentLetterX = null
+        this.currentLetterY = null
 
         this.state = {
             coords: [],
@@ -117,63 +116,63 @@ class Board extends React.Component {
         let array = this.state.coords.slice();
 
         if (eventType === "down") {
-            isSelectingProcess = true;
-            array.push({ x: currentLetterX, y: currentLetterY });
+            this.isSelectingProcess = true;
+            array.push({ x: this.currentLetterX, y: this.currentLetterY });
             this.setState({ coords: array });
         }
 
         if (eventType === "over") {
-            currentLetterX = coords.x;
-            currentLetterY = coords.y;
+            this.currentLetterX = coords.x;
+            this.currentLetterY = coords.y;
 
-            if (isSelectingProcess) {
-                let form = defineForm([{ x: array[0].x, y: array[0].y }, { x: currentLetterX, y: currentLetterY }]);
+            if (this.isSelectingProcess) {
+                let form = defineForm([{ x: array[0].x, y: array[0].y }, { x: this.currentLetterX, y: this.currentLetterY }]);
                 let direction = form.direction;
                 let angle = form.angle;
 
                 let arrayX = array[0].x;
                 let arrayY = array[0].y;
 
-                let horLength = currentLetterX - arrayX;
-                let verLength = currentLetterY - arrayY;
+                let horLength = this.currentLetterX - arrayX;
+                let verLength = this.currentLetterY - arrayY;
 
                 if (angle === 0 || angle === 90) {
                     array = [array[0]];
 
                     if (direction === "positive" && angle === 0) {
-                        for (let i = 1; i <= currentLetterX - arrayX; i++) {
-                            array.push({ x: arrayX + i, y: currentLetterY });
+                        for (let i = 1; i <= this.currentLetterX - arrayX; i++) {
+                            array.push({ x: arrayX + i, y: this.currentLetterY });
                         }
                     } else if (direction === "negative" && angle === 0) {
-                        for (let i = 1; i <= arrayX - currentLetterX; i++) {
-                            array.push({ x: arrayX - i, y: currentLetterY });
+                        for (let i = 1; i <= arrayX - this.currentLetterX; i++) {
+                            array.push({ x: arrayX - i, y: this.currentLetterY });
                         }
                     } else if (direction === "positive" && angle === 90) {
-                        for (let i = 1; i <= currentLetterY - arrayY; i++) {
-                            array.push({ x: currentLetterX, y: arrayY + i });
+                        for (let i = 1; i <= this.currentLetterY - arrayY; i++) {
+                            array.push({ x: this.currentLetterX, y: arrayY + i });
                         }
                     } else if (direction === "negative" && angle === 90) {
-                        for (let i = 1; i <= arrayY - currentLetterY; i++) {
-                            array.push({ x: currentLetterX, y: arrayY - i });
+                        for (let i = 1; i <= arrayY - this.currentLetterY; i++) {
+                            array.push({ x: this.currentLetterX, y: arrayY - i });
                         }
                     }
                 } else if (Math.abs(horLength) === Math.abs(verLength)) {
                     array = [array[0]];
                     
                     if (direction === "positive" && angle === 45) {
-                        for (let i = 1; i <= currentLetterX - arrayX; i++) {
+                        for (let i = 1; i <= this.currentLetterX - arrayX; i++) {
                             array.push({ x: arrayX + i, y: arrayY + i });
                         }
                     } else if (direction === "negative" && angle === 45) {
-                        for (let i = 1; i <= arrayX - currentLetterX; i++) {
+                        for (let i = 1; i <= arrayX - this.currentLetterX; i++) {
                             array.push({ x: arrayX - i, y: arrayY - i });
                         }
                     } else if (direction === "positive" && angle === 135) {
-                        for (let i = 1; i <= arrayX - currentLetterX; i++) {
+                        for (let i = 1; i <= arrayX - this.currentLetterX; i++) {
                             array.push({ x: arrayX - i, y: arrayY + i });
                         }
                     } else {
-                        for (let i = 1; i <= currentLetterX - arrayX; i++) {
+                        for (let i = 1; i <= this.currentLetterX - arrayX; i++) {
                             array.push({ x: arrayX + i, y: arrayY - i });
                         }
                     }
@@ -185,7 +184,7 @@ class Board extends React.Component {
 
         if (eventType === "up") {
             // check word !!!
-            isSelectingProcess = false;
+            this.isSelectingProcess = false;
             this.setState({ coords: [] });
         }
     }
@@ -235,7 +234,7 @@ class Board extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     const result = {
         viewModelName,
         aggregateId,

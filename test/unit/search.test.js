@@ -1,5 +1,5 @@
-import words from '../../words'
-import { SearchWord, CompareWord } from '../../search'
+import words from '../../common/words'
+import { SearchWord, CompareWord } from '../../common/search'
 
 test('Search algorithm should return "trim"', () => {
   const square = [

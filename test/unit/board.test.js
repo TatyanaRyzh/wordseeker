@@ -1,5 +1,5 @@
-import words from '../../words'
-import createBoard from '../../board'
+import words from '../../common/words'
+import createBoard from '../../common/board'
 
 describe('Board', () => {
   const generateRandom = inputSeed => {

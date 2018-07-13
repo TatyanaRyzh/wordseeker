@@ -8,7 +8,7 @@
     "start": "resolve-scripts start",
     "test": "resolve-scripts test",
     "test:functional": "resolve-scripts test:functional",
-	"prettier": "prettier --single-quote --no-semi --write \"**/**.js\""
+    "prettier": "prettier --single-quote --no-semi --write \"**/**.js\""
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.52",
@@ -30,10 +30,22 @@
     "@babel/preset-stage-0": "^7.0.0-beta.49",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^23.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.0.1",
     "prettier": "1.13.7",
     "react-test-renderer": "^16.4.0",
     "regenerator-runtime": "^0.11.1",
     "testcafe": "^0.20.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "raf/polyfill",
+      "<rootDir>/test/unit/jest-setup.js"
+    ],
+    "unmockedModulePathPatterns": [
+      "node_modules/react/",
+      "node_modules/enzyme/"
+    ]
   }
 }
