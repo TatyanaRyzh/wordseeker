@@ -19,11 +19,9 @@ function defineForm(points) {
     let direction = "positive";
     let angle = 90;
 
-    if (points.length > 1) {
-
-
-
-
+    if (points.length === 1) {
+        direction = "oneLetter";
+    } else {
         let secondX = points[1].x;
         let secondY = points[1].y;
 
@@ -46,7 +44,6 @@ function defineForm(points) {
             direction = "negative";
         }
     }
-
 
     return { direction: direction, angle: angle };
 }
@@ -102,7 +99,6 @@ function selectWord(word, index) {
 }
 
 let isSelectingProcess = false
-
 let currentLetterX;
 let currentLetterY;
 
@@ -125,80 +121,68 @@ class Board extends React.Component {
             array.push({ x: currentLetterX, y: currentLetterY });
             this.setState({ coords: array });
         }
-        if (eventType === "over") {
 
+        if (eventType === "over") {
             currentLetterX = coords.x;
             currentLetterY = coords.y;
 
             if (isSelectingProcess) {
-                let horParam = currentLetterX - array[0].x;
-                let verParam = currentLetterY - array[0].y;
+                let form = defineForm([{ x: array[0].x, y: array[0].y }, { x: currentLetterX, y: currentLetterY }]);
+                let direction = form.direction;
+                let angle = form.angle;
 
-                if (horParam === 0 && verParam === 0) {
-                    //1 letter
-                    array = [array[0]];
-                } else if (horParam > 0 && verParam === 0) {
-                    //hor+
-                    array = [array[0]];
-                    for (let i = 1; i <= currentLetterX - array[0].x; i++) {
-                        array.push({ x: array[0].x + i, y: currentLetterY });
-                    }
-                } else if (horParam < 0 && verParam === 0) {
-                    //hor-
+                let arrayX = array[0].x;
+                let arrayY = array[0].y;
+
+                let horLength = currentLetterX - arrayX;
+                let verLength = currentLetterY - arrayY;
+
+                if (angle === 0 || angle === 90) {
                     array = [array[0]];
 
-                    for (let i = 1; i <= array[0].x - currentLetterX; i++) {
-                        array.push({ x: array[0].x - i, y: currentLetterY });
+                    if (direction === "positive" && angle === 0) {
+                        for (let i = 1; i <= currentLetterX - arrayX; i++) {
+                            array.push({ x: arrayX + i, y: currentLetterY });
+                        }
+                    } else if (direction === "negative" && angle === 0) {
+                        for (let i = 1; i <= arrayX - currentLetterX; i++) {
+                            array.push({ x: arrayX - i, y: currentLetterY });
+                        }
+                    } else if (direction === "positive" && angle === 90) {
+                        for (let i = 1; i <= currentLetterY - arrayY; i++) {
+                            array.push({ x: currentLetterX, y: arrayY + i });
+                        }
+                    } else if (direction === "negative" && angle === 90) {
+                        for (let i = 1; i <= arrayY - currentLetterY; i++) {
+                            array.push({ x: currentLetterX, y: arrayY - i });
+                        }
                     }
-                } else if (horParam === 0 && verParam > 0) {
-                    //ver+
+                } else if (Math.abs(horLength) === Math.abs(verLength)) {
                     array = [array[0]];
-                    for (let i = 1; i <= currentLetterY - array[0].y; i++) {
-                        array.push({ x: currentLetterX, y: array[0].y + i });
-                    }
-                } else if (horParam === 0 && verParam < 0) {
-                    //ver-
-                    array = [array[0]];
-
-                    for (let i = 1; i <= array[0].y - currentLetterY; i++) {
-                        array.push({ x: currentLetterX, y: array[0].y - i });
-                    }
-                } else if (horParam > 0 && verParam > 0) {
-                    //45+
-                    if (horParam - verParam === 0) {
-                        array = [array[0]];
-                        for (let i = 1; i <= currentLetterX - array[0].x; i++) {
-                            array.push({ x: array[0].x + i, y: array[0].y + i });
+                    
+                    if (direction === "positive" && angle === 45) {
+                        for (let i = 1; i <= currentLetterX - arrayX; i++) {
+                            array.push({ x: arrayX + i, y: arrayY + i });
                         }
-                    }
-                } else if (horParam < 0 && verParam < 0) {
-                    //45-
-                    if (-(horParam - verParam) === 0) {
-                        array = [array[0]];
-                        for (let i = 1; i <= array[0].x - currentLetterX; i++) {
-                            array.push({ x: array[0].x - i, y: array[0].y - i });
+                    } else if (direction === "negative" && angle === 45) {
+                        for (let i = 1; i <= arrayX - currentLetterX; i++) {
+                            array.push({ x: arrayX - i, y: arrayY - i });
                         }
-                    }
-                } else if (horParam < 0 && verParam > 0) {
-                    //135+
-                    if (-horParam - verParam === 0) {
-                        array = [array[0]];
-                        for (let i = 1; i <= array[0].x - currentLetterX ; i++) {
-                            array.push({ x: array[0].x - i, y: array[0].y + i });
+                    } else if (direction === "positive" && angle === 135) {
+                        for (let i = 1; i <= arrayX - currentLetterX; i++) {
+                            array.push({ x: arrayX - i, y: arrayY + i });
                         }
-                    }
-                } else {
-                    //135-
-                    if (horParam - (-verParam) === 0) {
-                        array = [array[0]];
-                        for (let i = 1; i <= currentLetterX - array[0].x; i++) {
-                            array.push({ x: array[0].x + i, y: array[0].y - i });
+                    } else {
+                        for (let i = 1; i <= currentLetterX - arrayX; i++) {
+                            array.push({ x: arrayX + i, y: arrayY - i });
                         }
                     }
                 }
+
                 this.setState({ coords: array });
             }
         }
+
         if (eventType === "up") {
             isSelectingProcess = false;
             this.setState({ coords: [] });
@@ -238,7 +222,10 @@ class Board extends React.Component {
         }
 
         return (
-            <div className="board" onMouseDown={() => { this.addProcessCoord("down") }} onMouseUp={() => { this.addProcessCoord("up") }}>
+            <div className="board"
+                onMouseDown={() => { this.addProcessCoord("down") }}
+                onMouseUp={() => { this.addProcessCoord("up") }}
+            >
                 {letters}
                 {selectedWordsMarkup}
                 {selectWord({ isMine: true, coords: this.state.coords }, index)}
