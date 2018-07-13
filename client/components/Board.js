@@ -49,9 +49,7 @@ export function defineForm(points) {
     return { direction: direction, angle: angle };
 }
 
-export function selectWord(word, index) {
-    let points = word.coords;
-
+export function selectWord(points, wordType, index) {
     if (!points.length) {
         return;
     }
@@ -61,6 +59,7 @@ export function selectWord(word, index) {
     let direction = form.direction;
 
     let length = points.length;
+    let color;
 
     let wordWidth = angle === 0 ? LETTER_SIZE * length : LETTER_SIZE;
     let wordHeight = angle === 0 ? LETTER_SIZE : LETTER_SIZE * length;
@@ -84,15 +83,26 @@ export function selectWord(word, index) {
     translateX = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateX + " - " + marginX + DIMENTION + ")";
     translateY = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateY + " - " + marginY + DIMENTION + ")";
 
+    if (wordType === "mine") {
+color = "#3c4da9";
+
+    } else if (wordType === "process") {
+        color = "#0c25ad";
+
+    } else {
+        color = "#bebebe";
+
+    }
+
     return (<div className="word" key={index}
         style={{
             pointerEvents: "none",
             position: "absolute",
             width: wordWidth + DIMENTION,
             height: wordHeight + DIMENTION,
-            backgroundColor: word.isMine ? "#3c4da9" : "#bebebe",
+            backgroundColor: color,
             borderRadius: "30px",
-            opacity: "0.35",
+            opacity: wordType === "mine" ? "0.3" : "0.5",
             transformOrigin: "left center",
             transform: "translate(" + translateX + ", " + translateY + ") rotate(" + angle + "deg)"
         }}>
@@ -159,7 +169,7 @@ export class Board extends React.Component {
                     }
                 } else if (Math.abs(horLength) === Math.abs(verLength)) {
                     array = [array[0]];
-                    
+
                     if (direction === "positive" && angle === 45) {
                         for (let i = 1; i <= this.currentLetterX - arrayX; i++) {
                             array.push({ x: arrayX + i, y: arrayY + i });
@@ -184,7 +194,7 @@ export class Board extends React.Component {
         }
 
         if (eventType === "up") {
-            this.props.selectWord(this.props.aggregateId, {userId: '', points: array})
+            this.props.selectWord(this.props.aggregateId, { userId: this.props.userId, points: array })
             this.isSelectingProcess = false;
             this.setState({ coords: [] });
         }
@@ -219,7 +229,7 @@ export class Board extends React.Component {
         }
 
         for (index; index < selectedWords.length; index++) {
-            selectedWordsMarkup.push(selectWord(selectedWords[index], index));
+            selectedWordsMarkup.push(selectWord(selectedWords[index].coords, this.props.userId === selectedWords[index].userId ? "mine" : "", index));
         }
 
         return (
@@ -229,7 +239,7 @@ export class Board extends React.Component {
             >
                 {letters}
                 {selectedWordsMarkup}
-                {selectWord({ isMine: true, coords: this.state.coords }, index)}
+                {selectWord(this.state.coords, "process", index)}
             </div>
         )
     }
@@ -244,6 +254,7 @@ export const mapStateToProps = state => {
 
     const viewState = state.viewModels[viewModelName][aggregateId]
     if (viewState && Array.isArray(viewState.square)) {
+        result.userId = state.jwt.userId;
         result.board = viewState.square
         result.selectedWords = viewState.selectedWords
         result.allWordsCount = viewState.allWordsCount
@@ -254,6 +265,6 @@ export const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch, props) =>
-  bindActionCreators(props.aggregateActions, dispatch)
+    bindActionCreators(props.aggregateActions, dispatch)
 
 export default connectViewModel(mapStateToProps, mapDispatchToProps)(Board)
