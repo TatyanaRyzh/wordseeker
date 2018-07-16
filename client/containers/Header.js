@@ -16,7 +16,7 @@ class Header extends React.PureComponent {
 	        <div className="share-text">Share in Twitter</div>
         </a>
         Hello, 
-        <input className="input" onChange={this.onInputChange} value={this.props.username }/>!
+        <input className="input" onChange={this.onInputChange} value={ this.props.username }/>!
       </div>
     )
   }
@@ -26,9 +26,8 @@ function mapStateToProps(state){
   const users = state.viewModels.users['*'] || {}
   let username = state.user.username
   if(users[state.jwt.userId]) {
-    username = users[state.jwt.userId].username
-  }
-
+    username = users[state.jwt.userId].username;
+  } 
   return {
     username
   }
@@ -36,7 +35,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return{
-    usernameUpdate: function (username){
+      usernameUpdate: function (username){
       dispatch(usernameUpdate(username))
     }
   }

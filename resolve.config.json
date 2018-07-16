@@ -27,4 +27,13 @@
     }
   ],
   "sagas": "common/sagas/index.js",
+  "env": {
+    "test": {
+      "sagas": "common/sagas/functional-test.js",
+      "storageAdapter": {
+        "module": "resolve-storage-lite",
+        "options": {}
+      }
+    }
+  }
 }

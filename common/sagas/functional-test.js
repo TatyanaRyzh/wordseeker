@@ -1,3 +1,3 @@
 import mainSaga from './mainSaga'
 
-export default [mainSaga(false)]
+export default [mainSaga(true)]
