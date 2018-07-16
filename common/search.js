@@ -9,11 +9,19 @@ export function SearchWord (square, points) {
     return word;
 }
 
+let confirmedWords = [];
 export function CompareWord (words, word) {
     let result = false;
+    let isConfirmed = false;
+    for (let i = 0; i < confirmedWords.length; i++) {
+        if (word === confirmedWords[i]) {
+            isConfirmed = true;
+        }
+    }
     for (let j = 0; j < words.length; j++) {
-        if (word == words[j]) {
+        if ((word === words[j]) && (!isConfirmed)) {
             result = true;
+            confirmedWords.push(word);
             break;
         }
         else {
