@@ -12,6 +12,10 @@
     {
       "name": "users",
       "projection": "common/view-models/users.projection.js"
+    },
+    {
+      "name" : "rating",
+      "projection":"common/view-models/rating.projection.js"
     }
   ],
   "aggregates": [
