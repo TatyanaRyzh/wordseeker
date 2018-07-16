@@ -19,6 +19,4 @@ const mapStateToProps = state => {
     }
 }
 
-
-
 export default connectViewModel(mapStateToProps)(Rating)
