@@ -34,7 +34,7 @@ class App extends React.PureComponent {
   }
   
   render() {
-    if(!this.props.userId || !this.props.username) {
+    if(!this.props.userId) {
       return null
     }
 
