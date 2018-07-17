@@ -9,8 +9,10 @@ export default {
       } else {
         currentUserRating.score += word.length
       }
-
-      nextState.sort((a, b) => (a.score < b.score))
+      function sorting(a, b){
+        return b.score - a.score;
+      }
+      nextState.sort(sorting)
 
       for(let i = 0; i< nextState.length; i++) {
         nextState[i] = { ...nextState[i] }

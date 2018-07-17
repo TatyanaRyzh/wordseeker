@@ -6,7 +6,8 @@ const aggregateId = 'root';
 
 const Rating = ({ rating }) => (
     <div className="rating">
-        {rating ? JSON.stringify(rating.slice(0,10)) : null}
+        {rating ? JSON.stringify(rating.slice(0,10)) : null} 
+        {console.log(rating)}
     </div>
 )
 
