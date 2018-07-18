@@ -115,7 +115,8 @@ input {
 }
 
 body{
-	background: #3647ac;
+    background: #3647ac;
+    overflow: hidden;
 }
 
 .logo{
