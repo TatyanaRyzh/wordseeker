@@ -54,11 +54,10 @@ a{
 
     display: flex;
     flex-wrap: nowrap;
-    height: 11vh;
     font-size: 20px;
     color: #ffffff;
     text-align: center;
-    padding: 40px 0 40px 0;
+    padding: 30px 0 10px 0;
     font-family: Calibri;
 }
 
