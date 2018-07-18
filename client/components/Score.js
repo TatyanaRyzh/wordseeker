@@ -16,7 +16,9 @@ const calcScore = words => {
 
 function getScore(arr, userId){
   for (let i = 0; i < arr.length; i++){
-    if (arr[i].userId == userId) return arr[i].score;
+    if (arr[i].userId == userId) {
+    return arr[i].score;
+    }
   }
   return 0;
 }
