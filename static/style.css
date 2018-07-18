@@ -43,17 +43,22 @@ a{
     margin-top: 1vw;
     margin-left: 1.5vw;
     margin-right: 1.7vw;
-    width: calc(100% - 30px);
+    width: calc(100% - 3.2vw);
 }
 
 .header{
+    box-sizing: border-box;
+    margin-left: 1.5vw;
+    margin-right: 2vw;
+    width: calc(100% - 3.5vw);
+
     display: flex;
     flex-wrap: nowrap;
     height: 11vh;
     font-size: 20px;
     color: #ffffff;
     text-align: center;
-    padding: 40px 1vw 40px 1.5vw;
+    padding: 40px 0 40px 0;
     font-family: Calibri;
 }
 
