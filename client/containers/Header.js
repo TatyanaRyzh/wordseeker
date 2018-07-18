@@ -11,12 +11,14 @@ class Header extends React.PureComponent {
     return (
       <div className="header">
       	<img className="logo" src="./resolve-logo.svg" alt="Resolve logo"></img>
+        <div class="hello">
+          Hello, 
+          <input className="input" onChange={this.onInputChange} value={ this.props.username }  maxlength="15"/>!
+        </div>
         <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" className="share-button" target="_blank">
 	        <img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>
 	        <div className="share-text">Share in Twitter</div>
         </a>
-        Hello, 
-        <input className="input" onChange={this.onInputChange} value={ this.props.username }/>!
       </div>
     )
   }
@@ -25,7 +27,7 @@ class Header extends React.PureComponent {
 function mapStateToProps(state){
   const users = state.viewModels.users['*'] || {}
   let username = state.user.username
-  if(users[state.jwt.userId]) {
+  if(users[state.jwt.userId] && users[state.jwt.userId].username.length <= 15) {
     username = users[state.jwt.userId].username;
   } 
   return {

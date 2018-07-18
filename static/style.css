@@ -1,3 +1,12 @@
+a{
+    text-decoration: none;
+}
+.clearfix{
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .main-wrapper {
     background-color: #3647ac;
     min-height: 100vh;
@@ -31,14 +40,20 @@
 
 .footer{
     height: 8vh;
+    margin-top: 1vw;
+    margin-left: 1.5vw;
+    margin-right: 1.7vw;
+    width: calc(100% - 30px);
 }
 
 .header{
+    display: flex;
+    flex-wrap: nowrap;
     height: 11vh;
     font-size: 20px;
     color: #ffffff;
     text-align: center;
-    padding: 40px;
+    padding: 40px 1vw 40px 1.5vw;
     font-family: Calibri;
 }
 
@@ -52,15 +67,6 @@ input {
 
 .input:visited { color: #FFFFFF; text-decoration: none; }  
 .input:hover { color: #FFFFFF; text-decoration: none; }
-
-.rating{
-    background-color: white; 
-    width: 28vw; 
-    float: left; 
-    margin-left: 1.5vw; 
-    height: 81vh; 
-    border-radius: 10px;
-}
 
 .board{
     /*position: relative;*/
@@ -114,20 +120,10 @@ body{
 
 .logo{
 	height: 50px;
-
-	position: fixed;
-	left: 1.5vw;
-	top: 20px;
 }
 
-.icons-wrapper{
-	position: fixed;
-	right: 1.7vw;
-	bottom: 30px;
-}
-.small-icon{
-	width: 30px;
-	height: 30px;
+.hello{
+    flex: 1;
 }
 
 .share-button{
@@ -140,21 +136,11 @@ body{
 	border-radius: 20px;
 	padding: 0 10px 0 6px;
 
-	position: fixed;
-	right: 1.9vw;
-	top: 30px;
-
 	overflow: hidden;
-
-	width: 40px;
 
 	transition: 0.3s ease-out;
 	
 	transition-delay: 0.3s;
-}
-.share-button:hover{
-	width: 175px;
-	transition-delay: 0s;
 }
 
 .big-icon{
@@ -171,9 +157,7 @@ body{
 	white-space: nowrap;
 }
 .dx{
-	position: fixed;
-	left: 1.5vw;
-	bottom: 30px;
+	float: left;
 
 	color: rgba(255, 255, 255, 0.6);
     font-weight: bold;
@@ -182,10 +166,94 @@ body{
 	padding-right: 40px;
 }
 
+.icons-wrapper{
+	float: right;
+}
+.small-icon{
+	width: 30px;
+	height: 30px;
+}
+
 ::selection{
 	background: #FF7400;
 }
 
 ::-moz-selection {
 	background: #FF7400;
+}
+
+.rating{
+    background-color: white; 
+    width: 28vw; 
+    float: left; 
+    margin-left: 1.5vw; 
+    height: 81vh; 
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+.ratingTitle{
+    box-sizing: border-box;
+    height: 50px;
+    color: #bcbcbc;
+    font-size: 25px;
+    padding: 5px 0 5px 15px;
+
+    border-bottom: 2px solid #e9e9e9;
+
+    margin-bottom: 15px;
+}
+
+.participant{
+    box-sizing: border-box;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    height: 70px;
+    width: 100%;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+    color: #0008;
+    
+    overflow: hidden;
+}
+.participant > *{
+    box-sizing: border-box;
+}
+.place{
+    padding: 10px;
+    user-select: none;
+}
+.avatar{
+    
+    background: rgba(200, 200, 200, 0.7);
+    height: 50px;
+    width: 50px;
+
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    user-select: none;
+
+}
+.userName{
+    flex: 1;
+    padding: 10px;
+}
+
+.topUser{
+    background: #fff9e8;
+}
+
+.me{
+    background: #ffdc80
 }

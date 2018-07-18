@@ -17,6 +17,15 @@ export default {
           username: event.payload.username
         }
       }
-    }
+    },
+    UPDATE_USER_SCORE: (state, event) => {
+      return {
+        ...state,
+        [event.aggregateId]: {
+          ...state[event.aggregateId],
+          userScore: event.payload.userScore
+        }
+      }
+    },
   }
   

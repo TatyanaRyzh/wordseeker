@@ -14,5 +14,13 @@ export default {
                 username: command.payload.username
             }
         }
+    },
+    updateUserScore(state, command){
+        return {
+            type: 'UPDATE_USER_SCORE',
+            payload: {
+                userScore: command.payload.userScore
+            }
+        }
     }
 }
