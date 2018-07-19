@@ -35,6 +35,9 @@ export default {
 
   selectWord: (state, { payload: { userId, points } }) => {
     const word = SearchWord(state.square, points)
+    if(!userId) {
+      throw new Error()
+    }
     if (CompareWord(state.words, word)) {
       return {
         type: 'SELECT_WORD',

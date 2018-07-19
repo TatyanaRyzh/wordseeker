@@ -1,21 +1,26 @@
 import React from 'react'
 import { connectViewModel } from 'resolve-redux'
 
+
 const viewModelName = 'rating';
-const aggregateId = 'root';
+const aggregateId = '*';
 
 let ratingAppearing = false;
 let isFirstTime = true;
 
 function getLetters(userName){
+    if (!userName) return;
     let arr = userName.split(" ");
     if (arr[1]) return (arr[0][0] + arr[1][0]).toUpperCase();
     return arr[0][0].toUpperCase();
 }
-function getTopUsers(rating){
+function getTopUsers(arr){
     let list = [];
-    for (let i = 0; i < rating.length; i++){
-        list.push(<div className="participant"><div className="place">{(i+1)}</div><div className="avatar">{getLetters(rating[i].userName)}</div><div className="userName">{rating[i].userName}</div></div>);
+    console.log(arr);
+    for (let i = 0; i < arr.length; i++){
+        let userName = arr[i].username;
+
+        list.push(<div className="participant" key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div></div>);
     }
     return list;
 }
@@ -28,15 +33,13 @@ const Rating = ({ rating, userId, inRating }) => {
         ratingAppearing = true;
         ratingMe = "congratulation!"
     }
-
     if (!inRating && ratingAppearing) {
         ratingAppearing = false;
     }
 
     return (
         <div className="rating">
-            {rating ? JSON.stringify(rating.slice(0, 10)) : null}
-            {ratingMe}
+            {rating.length ? getTopUsers(rating) : null}
         </div>)
 }
 
