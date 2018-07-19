@@ -196,7 +196,9 @@ body{
     border-radius: 10px;
     padding: 10px 15px;
 }
-.ratingTitle{
+.ratingTop{
+    display: flex;
+    flex-wrap: nowrap;
     box-sizing: border-box;
     height: 50px;
     color: #bcbcbc;
@@ -207,6 +209,10 @@ body{
 
     margin-bottom: 15px;
 }
+.ratingTitle{
+    flex: 1;
+}
+
 
 .participant{
     box-sizing: border-box;

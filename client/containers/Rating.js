@@ -16,13 +16,21 @@ function getLetters(userName){
 }
 function getTopUsers(arr){
     let list = [];
-    console.log(arr);
-    for (let i = 0; i < arr.length; i++){
+    let length = arr.length > 10 ? 10 : arr.length;
+    for (let i = 0; i < length; i++){
         let userName = arr[i].username;
 
-        list.push(<div className="participant" key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div></div>);
+        list.push(<div className="participant" key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div><div className="userScore">{arr[i].score}</div></div>);
     }
     return list;
+}
+
+function findMyPlace(rating, myId){
+    let index;
+    for (let i = 0; i < rating.length; i++){
+        if (rating[i].userId == myId) return (i + 1);
+    }
+    console.log('Ошибка! Вы отсутсвуете в рейтингу');
 }
 
 
@@ -39,6 +47,10 @@ const Rating = ({ rating, userId, inRating }) => {
 
     return (
         <div className="rating">
+            <div className="ratingTop">
+                <div className="ratingTitle">Rating</div>
+                <div className="myRating">{findMyPlace(rating, userId)}</div>
+            </div>
             {rating.length ? getTopUsers(rating) : null}
         </div>)
 }
