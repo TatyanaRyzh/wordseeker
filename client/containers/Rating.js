@@ -14,13 +14,15 @@ function getLetters(userName){
     if (arr[1]) return (arr[0][0] + arr[1][0]).toUpperCase();
     return arr[0][0].toUpperCase();
 }
-function getTopUsers(arr){
+function getTopUsers(arr, myId){
     let list = [];
     let length = arr.length > 10 ? 10 : arr.length;
     for (let i = 0; i < length; i++){
         let userName = arr[i].username;
-
-        list.push(<div className="participant" key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div><div className="userScore">{arr[i].score}</div></div>);
+        let divClass = "participant";
+        if (i < 3) divClass = "participant topUser";
+        if (arr[i].userId == myId) divClass = "participant me";
+        list.push(<div className={divClass} key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div><div className="userScore">{arr[i].score}</div></div>);
     }
     return list;
 }
@@ -51,7 +53,7 @@ const Rating = ({ rating, userId, inRating }) => {
                 <div className="ratingTitle">Rating</div>
                 <div className="myRating">{findMyPlace(rating, userId)}</div>
             </div>
-            {rating.length ? getTopUsers(rating) : null}
+            {rating.length ? getTopUsers(rating, userId) : null}
         </div>)
 }
 
