@@ -1,11 +1,9 @@
 import React from 'react'
 import { connectViewModel } from 'resolve-redux'
+import {ratingAppearingUpdate, isFirstTimeUpdate} from '../actions/ratingActions'
 
 const viewModelName = 'rating';
 const aggregateId = 'root';
-
-let ratingAppearing = false;
-let isFirstTime = true;
 
 function getLetters(userName){
     let arr = userName.split(" ");
@@ -20,56 +18,65 @@ function getTopUsers(rating){
     return list;
 }
 
-
-const Rating = ({ rating, userId, inRating }) => {
-    let ratingMe;
-
-    if (inRating && !ratingAppearing) {
-        ratingAppearing = true;
-        ratingMe = "congratulation!"
+const Rating = (props) => {
+    if(!Array.isArray(props.rating)) { 
+        return null
     }
+    let inRating = false, ratingMe = null;
+    let isFirstTime = props.isFirstTime;
+    let ratingAppearing = props.ratingAppearing;
 
-    if (!inRating && ratingAppearing) {
-        ratingAppearing = false;
-    }
-
-    return (
-        <div className="rating">
-            {rating ? JSON.stringify(rating.slice(0, 10)) : null}
-            {ratingMe}
-        </div>)
-}
-
-const mapStateToProps = state => {
-    let ratingList = state.viewModels[viewModelName][aggregateId];
-    let userId = state.jwt.userId;
-    let inRating = false;
-
-    if (ratingList && ratingList.length) {
-        ratingList.forEach((item, index) => {
-            if (item.userId === userId && index <= 10) {
+    if (props.rating && props.rating.length) {
+        props.rating.forEach((item, index) => {
+            if (item.userId === props.userId && index <= 10) {
                 inRating = true;
             }
         })
-        if (isFirstTime) {
-            isFirstTime = false;
+        if (isFirstTime === true) {
+            isFirstTime = props.isFirstTimeUpdate(false).isFirstTime;
             if (inRating) {
-                ratingAppearing = true;
+                ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
             }
         }
     }
+    if (inRating && ratingAppearing === false) {
+        alert("Congratulation!");
+        ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
+    }
+    if (!inRating && ratingAppearing === true) {
+        ratingAppearing = props.ratingAppearingUpdate(false).ratingAppearing;
+    }
+    
+    
+    return (
+        <div className="rating">
+            {props.rating ? JSON.stringify(props.rating.slice(0, 10)) : null}
+        </div>)
+}
 
-    return {
-        viewModelName,
-        aggregateId,
-        rating: state.viewModels[viewModelName][aggregateId],
-        inRating: inRating,
-        userId: state.jwt.userId
+const getRating = (state) => {
+    try {
+        return state.viewModels[viewModelName][aggregateId]
+    } catch(err) {
+        return null
     }
 }
 
+const mapStateToProps = state => ({
+    viewModelName,
+    aggregateId,
+    rating: getRating(state),
+    userId: state.jwt.userId,
+    ratingAppearing: state.rating.ratingAppearing,
+    isFirstTime: state.rating.isFirstTime,
+})
 
-export default connectViewModel(mapStateToProps)(Rating)
+const mapDispatchToProps = (dispatch) => ({
+    ratingAppearingUpdate: (ratingAppearing) => dispatch(ratingAppearingUpdate(ratingAppearing)),
+    isFirstTimeUpdate: (isFirstTime) => dispatch(isFirstTimeUpdate(isFirstTime))
+})
+
+export default connectViewModel(mapStateToProps, mapDispatchToProps)(Rating)
 
 /*
 {

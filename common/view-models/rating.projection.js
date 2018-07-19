@@ -18,7 +18,6 @@ export default {
       for(let i = 0; i< nextState.length; i++) {
         nextState[i] = { ...nextState[i] }
       }
-      console.log(nextState);
       return nextState
     }
 }
