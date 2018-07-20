@@ -16,7 +16,7 @@ class Header extends React.PureComponent {
       	<img className="logo" src="./resolve-logo.svg" alt="Resolve logo"></img>
         <div className="hello">
           Hello, 
-          <input className="input" onChange={this.onInputChange.bind(this, this.props.userId)} value={ this.props.username }  maxLength="15"/>!
+          <input className="input" type="text" onChange={this.onInputChange.bind(this, this.props.userId)} value={ this.props.username }  maxLength="15"/>!
         </div>
         <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" className="share-button" target="_blank">
 	        <img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>

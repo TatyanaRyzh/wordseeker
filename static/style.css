@@ -62,7 +62,6 @@ a{
 }
 
 input {
-    width: 150px;
     font-size: 20px;
     background-color: #3647ac;
     border: none;
@@ -196,6 +195,8 @@ body{
     height: 81vh; 
     border-radius: 10px;
     padding: 10px 15px;
+
+    overflow: hidden;
 }
 .ratingTop{
     display: flex;
@@ -214,7 +215,6 @@ body{
     flex: 1;
 }
 
-
 .participant{
     box-sizing: border-box;
 
@@ -225,7 +225,6 @@ body{
     height: 70px;
     width: 100%;
 
-    border-radius: 10px;
 
     font-size: 18px;
     color: #0008;
@@ -234,6 +233,12 @@ body{
 }
 .participant > *{
     box-sizing: border-box;
+}
+.rating > :nth-child(2){
+    border-radius: 10px 10px 0 0;
+}
+.rating > :nth-child(4){
+    border-radius: 0 0 10px 10px;
 }
 .place{
     padding: 10px;
@@ -269,7 +274,92 @@ body{
     background: #fff9e8;
 }
 
-.me{
+.participant.me{
     background: #ffdc80;
     font-weight: bold;
+    border-radius: 10px;
+}
+.fixedoverlay{
+    display: none;
+    background: #0008;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+}
+.congratulations{
+    display: none;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+    height: 450px;
+    border-radius: 20px;
+
+    background: #fff;
+    z-index: 110;
+
+    overflow: hidden;
+}
+.congratulations-content{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    height: 370px;
+}
+
+.congratulations-title{
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.reward{
+    width: 120px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+
+.congratulations p{
+    font-size: 18px;
+    font-weight: bold;
+    max-width: 75%;
+    text-align: center;
+}
+
+.congratulations-share-wrapper{
+    background: rgb(54, 71, 172);
+    position: relative;
+
+    width: 100%;
+    height: 80px;
+    
+    color: #fff;
+    font-size: 20px;
+}
+.congratulations-share{
+    display: block;
+    text-decoration: none;
+    color: #fff;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.congratulations-share:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+.congratulations-share-twitter{
+    height: 30px;
+    margin-right: 10px;
 }
