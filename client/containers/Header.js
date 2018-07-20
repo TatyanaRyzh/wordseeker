@@ -4,7 +4,8 @@ import {usernameUpdate} from '../actions/userActions'
 
 class Header extends React.PureComponent {
   onInputChange = (event) => {
-    this.props.usernameUpdate(event.target.value)
+    this.props.usernameUpdate(event.target.value);
+    console.log(event.target.value);
   };
 
   render() {
@@ -29,7 +30,7 @@ function mapStateToProps(state){
   let username = state.user.username
   if(users[state.jwt.userId] && users[state.jwt.userId].username.length <= 15) {
     username = users[state.jwt.userId].username;
-  } 
+  }
   return {
     username
   }

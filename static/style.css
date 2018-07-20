@@ -19,7 +19,7 @@ a{
 .chat
 {
     background-color: white;
-    width: calc(66.5vw - 75vh);
+    width: calc(74.5vw - 75vh);
     float: left; 
     margin-left: 1vw; 
     height: 81vh; 
@@ -189,14 +189,17 @@ body{
 
 .rating{
     background-color: white; 
-    width: 28vw; 
+    width: 20vw; 
+    min-width: 300px;
     float: left; 
     margin-left: 1.5vw; 
     height: 81vh; 
     border-radius: 10px;
     padding: 10px 15px;
 }
-.ratingTitle{
+.ratingTop{
+    display: flex;
+    flex-wrap: nowrap;
     box-sizing: border-box;
     height: 50px;
     color: #bcbcbc;
@@ -207,6 +210,10 @@ body{
 
     margin-bottom: 15px;
 }
+.ratingTitle{
+    flex: 1;
+}
+
 
 .participant{
     box-sizing: border-box;
@@ -254,11 +261,15 @@ body{
     flex: 1;
     padding: 10px;
 }
+.userScore{
+    padding: 10px;
+}
 
 .topUser{
     background: #fff9e8;
 }
 
 .me{
-    background: #ffdc80
+    background: #ffdc80;
+    font-weight: bold;
 }

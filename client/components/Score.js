@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const viewModelName = 'rating';
-const aggregateId = 'root';
+const aggregateId = '*';
 
 const calcScore = words => {
   let score = 0
@@ -15,11 +15,13 @@ const calcScore = words => {
 }
 
 function getScore(arr, userId){
+  if(arr) {
   for (let i = 0; i < arr.length; i++){
     if (arr[i].userId == userId) {
     return arr[i].score;
     }
   }
+}
   return 0;
 }
 
@@ -28,7 +30,7 @@ const Score = ({rating, userId}) => (
     <div className="score-component">
       <div className="score-caption">Score</div>
 
-      <div className="score-number">{getScore(rating, userId)}</div>
+      <div className="score-number">{(rating && rating.length > 0) ? getScore(rating, userId) : null}</div>
     </div>
 
     <div className="underline" />

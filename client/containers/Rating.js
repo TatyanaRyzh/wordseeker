@@ -3,29 +3,38 @@ import { connectViewModel } from 'resolve-redux'
 import {ratingAppearingUpdate, isFirstTimeUpdate} from '../actions/ratingActions'
 
 const viewModelName = 'rating';
-const aggregateId = 'root';
+const aggregateId = '*';
 
 function getLetters(userName){
+    if (!userName) return;
     let arr = userName.split(" ");
     if (arr[1]) return (arr[0][0] + arr[1][0]).toUpperCase();
     return arr[0][0].toUpperCase();
 }
-function getTopUsers(rating){
+
+function getTopUsers(arr, myId){
     let list = [];
-    for (let i = 0; i < rating.length; i++){
-        list.push(<div className="participant"><div className="place">{(i+1)}</div><div className="avatar">{getLetters(rating[i].userName)}</div><div className="userName">{rating[i].userName}</div></div>);
+    let length = arr.length > 10 ? 10 : arr.length;
+    for (let i = 0; i < length; i++){
+        let userName = arr[i].username;
+        let divClass = "participant";
+        if (i < 3) divClass = "participant topUser";
+        if (arr[i].userId == myId) divClass = "participant me";
+        list.push(<div className={divClass} key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div><div className="userScore">{arr[i].score}</div></div>);
     }
     return list;
 }
 
-const Rating = (props) => {
-    if(!Array.isArray(props.rating)) { 
-        return null
+function findMyPlace(rating, myId){
+    for (let i = 0; i < rating.length; i++){
+        if (rating[i].userId == myId) return (i + 1);
     }
-    let inRating = false, ratingMe = null;
+}
+
+const Rating = (props) => {
+    let inRating = false;
     let isFirstTime = props.isFirstTime;
     let ratingAppearing = props.ratingAppearing;
-
     if (props.rating && props.rating.length) {
         props.rating.forEach((item, index) => {
             if (item.userId === props.userId && index <= 10) {
@@ -46,44 +55,30 @@ const Rating = (props) => {
     if (!inRating && ratingAppearing === true) {
         ratingAppearing = props.ratingAppearingUpdate(false).ratingAppearing;
     }
-    
-    
+
     return (
         <div className="rating">
-            {props.rating ? JSON.stringify(props.rating.slice(0, 10)) : null}
+            <div className="ratingTop">
+                <div className="ratingTitle">Rating</div>
+                <div className="myRating">{findMyPlace(props.rating, props.userId)}</div>
+            </div>
+            {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
         </div>)
 }
 
-const getRating = (state) => {
-    try {
-        return state.viewModels[viewModelName][aggregateId]
-    } catch(err) {
-        return null
+const mapStateToProps = state => {
+    return {
+        viewModelName,
+        aggregateId,
+        rating: state.viewModels[viewModelName][aggregateId],
+        userId: state.jwt.userId,
+        ratingAppearing: state.rating.ratingAppearing,
+        isFirstTime: state.rating.isFirstTime,
     }
 }
-
-const mapStateToProps = state => ({
-    viewModelName,
-    aggregateId,
-    rating: getRating(state),
-    userId: state.jwt.userId,
-    ratingAppearing: state.rating.ratingAppearing,
-    isFirstTime: state.rating.isFirstTime,
-})
 
 const mapDispatchToProps = (dispatch) => ({
     ratingAppearingUpdate: (ratingAppearing) => dispatch(ratingAppearingUpdate(ratingAppearing)),
     isFirstTimeUpdate: (isFirstTime) => dispatch(isFirstTimeUpdate(isFirstTime))
 })
-
 export default connectViewModel(mapStateToProps, mapDispatchToProps)(Rating)
-
-/*
-{
-            const list = [];
-            for (let i = 0; i < rating.length; i++){
-                list.push(<div className="participant"><div className="place">(i+1)</div><div className="avatar">getLetters(rating[i].userName)</div><div className="userName">rating[i].userName</div></div>);
-            }
-            return ${list};
-        }
-*/
