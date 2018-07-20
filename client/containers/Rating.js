@@ -32,7 +32,7 @@ function findMyPlace(rating, myId){
     for (let i = 0; i < rating.length; i++){
         if (rating[i].userId == myId) return (i + 1);
     }
-    console.log('Ошибка! Вы отсутсвуете в рейтингу');
+    console.log('Ошибка! Вы отсутсвуете в рейтингe');
 }
 
 
