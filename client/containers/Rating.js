@@ -1,12 +1,9 @@
 import React from 'react'
 import { connectViewModel } from 'resolve-redux'
-
+import {ratingAppearingUpdate, isFirstTimeUpdate} from '../actions/ratingActions'
 
 const viewModelName = 'rating';
 const aggregateId = '*';
-
-let ratingAppearing = false;
-let isFirstTime = true;
 
 function getLetters(userName){
     if (!userName) return;
@@ -14,6 +11,7 @@ function getLetters(userName){
     if (arr[1]) return (arr[0][0] + arr[1][0]).toUpperCase();
     return arr[0][0].toUpperCase();
 }
+
 function getTopUsers(arr, myId){
     let list = [];
     let length = arr.length > 10 ? 10 : arr.length;
@@ -28,72 +26,59 @@ function getTopUsers(arr, myId){
 }
 
 function findMyPlace(rating, myId){
-    let index;
     for (let i = 0; i < rating.length; i++){
         if (rating[i].userId == myId) return (i + 1);
     }
-    console.log('Ошибка! Вы отсутсвуете в рейтингe');
 }
 
-
-const Rating = ({ rating, userId, inRating }) => {
-    let ratingMe;
-
-    if (inRating && !ratingAppearing) {
-        ratingAppearing = true;
-        ratingMe = "congratulation!"
+const Rating = (props) => {
+    let inRating = false;
+    let isFirstTime = props.isFirstTime;
+    let ratingAppearing = props.ratingAppearing;
+    if (props.rating && props.rating.length) {
+        props.rating.forEach((item, index) => {
+            if (item.userId === props.userId && index <= 10) {
+                inRating = true;
+            }
+        })
+        if (isFirstTime === true) {
+            isFirstTime = props.isFirstTimeUpdate(false).isFirstTime;
+            if (inRating) {
+                ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
+            }
+        }
     }
-    if (!inRating && ratingAppearing) {
-        ratingAppearing = false;
+    if (inRating && ratingAppearing === false) {
+        alert("Congratulation!");
+        ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
+    }
+    if (!inRating && ratingAppearing === true) {
+        ratingAppearing = props.ratingAppearingUpdate(false).ratingAppearing;
     }
 
     return (
         <div className="rating">
             <div className="ratingTop">
                 <div className="ratingTitle">Rating</div>
-                <div className="myRating">{findMyPlace(rating, userId)}</div>
+                <div className="myRating">{findMyPlace(props.rating, props.userId)}</div>
             </div>
-            {rating.length ? getTopUsers(rating, userId) : null}
+            {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
         </div>)
 }
 
 const mapStateToProps = state => {
-    let ratingList = state.viewModels[viewModelName][aggregateId];
-    let userId = state.jwt.userId;
-    let inRating = false;
-
-    if (ratingList && ratingList.length) {
-        ratingList.forEach((item, index) => {
-            if (item.userId === userId && index <= 10) {
-                inRating = true;
-            }
-        })
-        if (isFirstTime) {
-            isFirstTime = false;
-            if (inRating) {
-                ratingAppearing = true;
-            }
-        }
-    }
-
     return {
         viewModelName,
         aggregateId,
         rating: state.viewModels[viewModelName][aggregateId],
-        inRating: inRating,
-        userId: state.jwt.userId
+        userId: state.jwt.userId,
+        ratingAppearing: state.rating.ratingAppearing,
+        isFirstTime: state.rating.isFirstTime,
     }
 }
 
-
-export default connectViewModel(mapStateToProps)(Rating)
-
-/*
-{
-            const list = [];
-            for (let i = 0; i < rating.length; i++){
-                list.push(<div className="participant"><div className="place">(i+1)</div><div className="avatar">getLetters(rating[i].userName)</div><div className="userName">rating[i].userName</div></div>);
-            }
-            return ${list};
-        }
-*/
+const mapDispatchToProps = (dispatch) => ({
+    ratingAppearingUpdate: (ratingAppearing) => dispatch(ratingAppearingUpdate(ratingAppearing)),
+    isFirstTimeUpdate: (isFirstTime) => dispatch(isFirstTimeUpdate(isFirstTime))
+})
+export default connectViewModel(mapStateToProps, mapDispatchToProps)(Rating)
