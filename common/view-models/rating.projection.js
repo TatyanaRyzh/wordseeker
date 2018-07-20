@@ -1,9 +1,6 @@
 export default {
     Init: () => ([]),
-
-
     CREATE_USER: (state, event) => {
-      console.log(event)
       return [
         ...state,
         {
@@ -23,29 +20,25 @@ export default {
         )
       )
     },
-
-
-
     SELECT_WORD: (state, { payload: { userId, word } }) => {
  
       const nextState = [...state]
       let currentUserRating = nextState.find(({ userId: id }) => ( userId === id ))
-      // if(!currentUserRating) {
-      //   currentUserRating = { userId, score: word.length }
-      //   nextState.push(currentUserRating)
-      // } else {
+       if(!currentUserRating) {
+         currentUserRating = { userId, score: word.length }
+         nextState.push(currentUserRating)
+       } else {
         currentUserRating.score += word.length
-      // }
+       }
       
       function sorting(a, b){
         return b.score - a.score;
       }
       nextState.sort(sorting)
 
-      // for(let i = 0; i< nextState.length; i++) {
-      //   nextState[i] = { ...nextState[i] }
-      // }
-      console.log(nextState);
+       for(let i = 0; i< nextState.length; i++) {
+         nextState[i] = { ...nextState[i] }
+       }
       return nextState
     }
 }
