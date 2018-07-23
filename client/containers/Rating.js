@@ -20,7 +20,12 @@ function getTopUsers(arr, myId){
         let divClass = "participant";
         if (i < 3) divClass = "participant topUser";
         if (arr[i].userId == myId) divClass = "participant me";
-        list.push(<div className={divClass} key={i}><div className="place">{(i+1)}</div><div className="avatar">{getLetters(userName)}</div><div className="userName">{userName}</div><div className="userScore">{arr[i].score}</div></div>);
+        list.push(<div className={divClass} key={i}>
+            <div className="place">{(i+1)}</div>
+            <div className="avatar">{getLetters(userName)}</div>
+            <div className="userName">{userName}</div>
+            <div className="userScore">{arr[i].score}</div>
+        </div>);
     }
     return list;
 }
