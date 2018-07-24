@@ -27,80 +27,79 @@ function getTopUsers(arr, myId){
 
 function findMyPlace(rating, myId){
     for (let i = 0; i < rating.length; i++){
-        if (rating[i].userId == myId) return (i + 1);
+        if (rating[i].userId == myId) return i;
     }
 }
-let test = "none";
 
-function handleButtonClick() {
-    console.log(test);
-    test = 'none';
-}
-const Rating = (props) => {
-    let inRating = false;
-    let isFirstTime = props.isFirstTime;
-    let ratingAppearing = props.ratingAppearing;
-    
-    if (props.rating && props.rating.length) {
-        props.rating.forEach((item, index) => {
-            if (item.userId === props.userId && index <= 10) {
-                inRating = true;
-            }
-        })
-        if (isFirstTime === true) {
-            isFirstTime = props.isFirstTimeUpdate(false).isFirstTime;
-            if (inRating) {
-                ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
+class Rating extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { test: 'none' }
+    }
+
+    handleButton() {
+        this.setState({test: 'none'});
+    }
+
+    congratulation() {
+        this.setState({test: 'block'});
+    }
+
+    render() {
+        let props = this.props;
+        let inRating = false;
+        let isFirstTime = props.isFirstTime;
+        let ratingAppearing = props.ratingAppearing;
+        
+        if (props.rating && props.rating.length) {
+            props.rating.forEach((item, index) => {
+                if (item.userId === props.userId && index < 10) {
+                    inRating = true;
+                }
+            })
+            if (isFirstTime === true) {
+                isFirstTime = props.isFirstTimeUpdate(false).isFirstTime;
+                if (inRating) {
+                    ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
+                }
             }
         }
-    }
-    if (inRating && ratingAppearing === false) {
-        test = "block"
-        ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
-    }
-    if (!inRating && ratingAppearing === true) {
-        ratingAppearing = props.ratingAppearingUpdate(false).ratingAppearing;
-    }
+        if (inRating && ratingAppearing === false) {
+            this.congratulation();
+            ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
+        }
+        if (!inRating && ratingAppearing === true) {
+            ratingAppearing = props.ratingAppearingUpdate(false).ratingAppearing;
+        }
 
-    return (
-        <div className="rating">
-            <div className="ratingTop">
-                <div className="ratingTitle">Rating</div>
-                <div className="myRating">{findMyPlace(props.rating, props.userId)}</div>
+        let myIndex = findMyPlace(props.rating, props.userId);
+        let myName = props.rating[myIndex] ? props.rating[myIndex].username : null;
+
+        return (
+            <div className="rating">
+                <div className="ratingTop">
+                    <div className="ratingTitle">Rating</div>
+                    <div className="myRating">{myIndex + 1}</div>
+                </div>
+                {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
+
+                <div className="fixedoverlay" id="fixedoverlay" style={{display: this.state.test}} onClick={ () => this.handleButton() }></div>
+                <div className="congratulations" id="congratulations" style={{display: this.state.test}}>
+                <div className="congratulations-content">
+                    <div className="congratulations-title">Congratulations!</div>
+                    <img className="reward" src="./reward.svg"></img>
+                    <p>{myName}</p>
+                    <p>Поздравляем! Вы попали в ТОП10 рейтинга!</p>
+                </div>
+                <div className="congratulations-share-wrapper">
+                    <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
+                </div>
             </div>
-            {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
 
-            <div className="fixedoverlay" id="fixedoverlay" style={{display: test}} onClick={handleButtonClick}></div>
-            <div className="congratulations" id="congratulations" style={{display: test}}>
-            <div className="congratulations-content">
-                <div className="congratulations-title">Congratulations!</div>
-                <img className="reward" src="./reward.svg"></img>
-                <p>Name Name</p>
-                <p>Поздравляем! Вы попали в ТОП10 рейтинга!</p>
-            </div>
-            <div className="congratulations-share-wrapper">
-                <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
-            </div>
-        </div>
-
-    </div>)
+        </div>)
+    }
 }
-
-/*
-let fixedoverlay = document.getElementById('fixedoverlay');
-let congratulations = document.getElementById('congratulations');
-
-fixedoverlay .onclick = function(){
-    fixedoverlay.style.display = 'none';
-    congratulations.style.display = 'none';
-}
-
-function congratulate(){
-    fixedoverlay.style.display = 'block';
-    congratulations.style.display = 'block';
-}
-
-*/
 
 const mapStateToProps = state => {
     return {
