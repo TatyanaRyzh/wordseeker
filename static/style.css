@@ -1,6 +1,9 @@
 a{
     text-decoration: none;
 }
+a:visited{
+    color: #fff;
+}
 .clearfix{
     content: "";
     display: table;
@@ -13,7 +16,40 @@ a{
 }
 
 .main-containers{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
     min-height: 81vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.footer{
+    box-sizing: border-box;
+    height: 8vh;
+    width: 100%;
+
+    margin-top: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.header{
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1vw 2vw;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    font-family: Calibri;
 }
 
 .chat
@@ -41,8 +77,9 @@ a{
 .rating{
     background-color: white;
     width: 20vw;
+    min-width: 320px;
+
     float: left; 
-    margin-left: 1.5vw; 
     height: 81vh; 
     border-radius: 10px;
     padding: 10px 15px;
@@ -50,28 +87,7 @@ a{
     overflow: hidden;
 }
 
-.footer{
-    height: 8vh;
-    margin-top: 1vw;
-    margin-left: 1.5vw;
-    margin-right: 1.7vw;
-    width: calc(100% - 3.2vw);
-}
 
-.header{
-    box-sizing: border-box;
-    margin-left: 1.5vw;
-    margin-right: 2vw;
-    width: calc(100% - 3.5vw);
-
-    display: flex;
-    flex-wrap: nowrap;
-    font-size: 20px;
-    color: #ffffff;
-    text-align: center;
-    padding: 30px 0 10px 0;
-    font-family: Calibri;
-}
 
 input {
     font-size: 20px;
@@ -131,6 +147,10 @@ input {
 }
 
 body{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+
     background: #3647ac;
     overflow: hidden;
 }
@@ -141,6 +161,8 @@ body{
 
 .hello{
     flex: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .share-button{
@@ -244,6 +266,8 @@ body{
 .place{
     padding: 10px;
     user-select: none;
+    width: 40px;
+    text-align: center;
 }
 .avatar{
     
@@ -370,7 +394,7 @@ body{
     }
 }
 
-@media screen and (max-width: 1053px) {
+@media screen and (max-width: 1060px) {
     .rating {
         display: none;
     }
