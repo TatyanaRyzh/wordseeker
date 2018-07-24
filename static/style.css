@@ -420,6 +420,15 @@ body{
     color: #b0b0b0;
 }
 
+.messages {
+    overflow: auto;
+    max-height: calc(100% - 115px);
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 .enteryField {
     position: absolute;
     height: 50px;
@@ -445,6 +454,7 @@ body{
     box-sizing: border-box;
     width: 90%;
     margin-bottom: 15px;
+    overflow: auto;
 }
 
 .chatName{
