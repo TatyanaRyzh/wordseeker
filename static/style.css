@@ -486,6 +486,7 @@ body{
             display: none;
         }
     }
+}
 
 .chatMessage {
     box-sizing: border-box;
