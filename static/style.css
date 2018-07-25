@@ -449,9 +449,6 @@ body{
     width: 30px;
 }
 
-<<<<<<< HEAD
-
-
 @media screen and (min-height: 901px) { /* large */
     @media screen and (max-width: 1370px) {
         .chat{
@@ -489,7 +486,7 @@ body{
             display: none;
         }
     }
-=======
+
 .chatMessage {
     box-sizing: border-box;
     width: 90%;
@@ -540,5 +537,4 @@ body{
 .myMessage .chatName{
     text-align: right;
     color: #737cbc;
->>>>>>> 30e34dda8070f0858865c89a5d4da03529135b54
 }
