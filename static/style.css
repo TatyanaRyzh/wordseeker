@@ -447,6 +447,7 @@ body{
 .send {
     box-sizing: border-box;
     width: 30px;
+    cursor: pointer;
 }
 
 @media screen and (min-height: 901px) { /* large */
