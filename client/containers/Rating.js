@@ -80,7 +80,7 @@ class Rating extends React.Component {
             <div className="rating">
                 <div className="ratingTop">
                     <div className="ratingTitle">Rating</div>
-                    <div className="myRating">{myIndex + 1}</div>
+                    <div className="myRating">#{myIndex + 1}</div>
                 </div>
                 {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
 

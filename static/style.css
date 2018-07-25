@@ -31,7 +31,7 @@ a:visited{
     height: 8vh;
     width: 100%;
 
-    margin-top: 1vw;
+    margin-top: calc(1vh + 15px);
     padding-left: 2vw;
     padding-right: 2vw;
 }
@@ -40,7 +40,8 @@ a:visited{
 
     box-sizing: border-box;
     width: 100%;
-    padding: 1vw 2vw;
+    padding: 1vh 2vw;
+    height: 10vh;
 
     display: flex;
     flex-wrap: nowrap;
@@ -74,19 +75,36 @@ a:visited{
     padding: 1vh; 
     font-size: 28px; 
     font-family: "Calibri";
+
+    min-width: 400px;
+    min-height: 435px;
+}
+
+.letter{
+    float: left; 
+    width: 6.1vh; 
+    height: 6.1vh; 
+    color: #3b3b3b; 
+    text-align: center;
+    vertical-align: middle;
+    line-height: 6.1vh;
+    font-weight: 500;
+
+    min-width: 33px;
+    min-width: 33px;
 }
 
 .rating{
     background-color: white;
-    width: 20vw;
-    min-width: 320px;
+    flex: 1;
+    max-width: 350px;
 
     float: left; 
     height: 81vh; 
     border-radius: 10px;
     padding: 10px 15px;
 
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 
@@ -110,16 +128,7 @@ input {
 
 }
 
-.letter{
-    float: left; 
-    width: 6.1vh; 
-    height: 6.1vh; 
-    color: #3b3b3b; 
-    text-align: center;
-    vertical-align: middle;
-    line-height: 6.1vh;
-    font-weight: 500;
-}
+
 
 .score{
     width: 100%; 
@@ -250,11 +259,9 @@ body{
     height: 70px;
     width: 100%;
 
-
     font-size: 18px;
     color: #0008;
     
-    overflow: hidden;
 }
 .participant > *{
     box-sizing: border-box;
@@ -276,6 +283,7 @@ body{
     background: rgba(200, 200, 200, 0.7);
     height: 50px;
     width: 50px;
+    min-width: 50px;
 
     font-size: 20px;
     color: #fff;
@@ -292,9 +300,12 @@ body{
 .userName{
     flex: 1;
     padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .userScore{
     padding: 10px;
+    min-width: 30px;
 }
 
 .topUser{
@@ -390,18 +401,6 @@ body{
 }
 
 
-@media screen and (max-width: 1363px) {
-    .chat {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 1060px) {
-    .rating {
-        display: none;
-    }
-}
-
 .chatTitle {
     display: flex;
     flex-wrap: nowrap;
@@ -438,4 +437,45 @@ body{
 
 .send {
     width: 30px;
+}
+
+
+
+@media screen and (min-height: 901px) { /* large */
+    @media screen and (max-width: 1370px) {
+        .chat{
+            display: none;
+        }
+    }
+    @media screen and (max-width: 1000px) {
+        .rating{
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-height: 900px) and (min-height: 601px) { /* middle */
+    @media screen and (max-width: 1050px) {
+        .chat{
+            display: none;
+        }
+    }
+    @media screen and (max-width: 800px) {
+        .rating{
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-height: 600px) { /* small */
+    @media screen and (max-width: 800px) {
+        .chat{
+            display: none;
+        }
+    }
+    @media screen and (max-width: 670px) {
+        .rating{
+            display: none;
+        }
+    }
 }

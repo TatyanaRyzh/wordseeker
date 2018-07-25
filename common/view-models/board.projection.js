@@ -8,7 +8,7 @@ export default {
       selectedWords: []
     }
   },
-  SELECT_WORD: (state, { payload: { userId, points, word } }) => {
+  SELECT_WORD: (state, { payload: { userId, points} }) => {
     return {
       ...state,
       selectedWords: state.selectedWords.concat({

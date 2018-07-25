@@ -16,6 +16,10 @@
     {
       "name" : "rating",
       "projection":"common/view-models/rating.projection.js"
+    },
+    {
+      "name" : "chat",
+      "projection" : "common/view-models/chat.projection.js"
     }
   ],
   "aggregates": [
