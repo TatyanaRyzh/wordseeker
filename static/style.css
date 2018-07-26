@@ -1,8 +1,10 @@
 a{
     text-decoration: none;
 }
-a:visited{
+a:visited, a:focus{
     color: #fff;
+    text-decoration: none;
+    outline: none;
 }
 .clearfix{
     content: "";
