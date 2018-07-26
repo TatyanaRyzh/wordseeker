@@ -9,17 +9,32 @@ const aggregateId = '*';
 class Chat extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = { text: "" }
+        this.listRef = React.createRef();
+        this.state = { text: "" , input: "", click: false}
     }
 
     recieveText(e) {
-        this.setState({text: e.target.value})
+        this.setState({text: e.target.value, input: e.target})
     }
 
     sendText(userId, event) {
-        this.props.sendMessage(userId, this.state.text, this.props.userName);
+        this.props.sendMessage(this.props.userId, this.state.text, this.props.userName);
+        this.setState({click: true})
     }   
+
+    buttonHandler(e){
+        if (e.which == 13) this.sendText(this.props.userId, e);
+    }
+
+    componentDidUpdate(snapshot) {
+        if (snapshot !== null) {
+          const list = this.listRef.current;
+          list.scrollTop = list.scrollHeight;
+        }
+        if (this.state.click) {
+            this.state.input.value = '';
+        }
+    }
 
     render() {
         function getMessages(arr, myId){
@@ -40,13 +55,12 @@ class Chat extends React.Component {
         return (
             <div className="chat">
                 <div className="chatTitle">Chat</div>
-
-                <div className="messages">
-                    {this.props.messages ? getMessages(this.props.messages, this.state.userId) : null}
+                <div className="messages" ref={this.listRef}>
+                    {this.props.messages ? getMessages(this.props.messages, this.props.userId) : null}
                 </div>
 
                 <div className="enteryField">
-                    <input className="inputMessage" type="text" placeholder="Text..." value={this.state.text} onChange={(e) => this.recieveText(e)}/> 
+                    <input className="inputMessage" type="text" placeholder="Text..." value={this.state.text} onChange={(e) => this.recieveText(e)} onKeyDown={(e) => this.buttonHandler(e)}/> 
                     <img className="send" src="./send.svg" onClick={this.sendText.bind(this, this.props.userId)}></img>  
                 </div>
             </div>
@@ -66,7 +80,7 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch, { aggregateActions }){
     return {
-        sendMessage: (userId, text, userName) => dispatch(aggregateActions.sendMessage(userId, {text: text, username: userName}))
+        sendMessage: (userId, text, userName) => dispatch(aggregateActions.sendMessage(userId, {text: text, username: userName, userId: userId}))
     }
 }
 
