@@ -32,7 +32,13 @@
       "name": "user",
       "commands": "common/aggregates/user.commands.js",
 	    "projection": "common/aggregates/user.projection.js"
+    },
+    {
+      "name": "chat",
+      "commands": "common/aggregates/chat.commands.js",
+	    "projection": "common/aggregates/chat.projection.js"
     }
+
   ],
   "sagas": "common/sagas/index.js",
   "env": {
