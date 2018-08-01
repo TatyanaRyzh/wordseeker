@@ -1,5 +1,6 @@
 import React from 'react'
 import { connectViewModel } from 'resolve-redux'
+import {usernameUpdate} from '../actions/userActions'
 import {ratingAppearingUpdate, isFirstTimeUpdate} from '../actions/ratingActions'
 
 const viewModelName = 'rating';
@@ -25,9 +26,11 @@ function getTopUsers(arr, myId){
     return list;
 }
 
-function findMyPlace(rating, myId){
+function findMyPlace(rating, myId, state){
     for (let i = 0; i < rating.length; i++){
-        if (rating[i].userId == myId) return i;
+        if (rating[i].userId == myId) {
+            return i
+        }
     }
 }
 
@@ -35,15 +38,32 @@ class Rating extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { test: 'none' }
+        this.state = { flagCongratulation: 'none', flagWelcome: 'none', flagFixedoverlay: 'none', text: '' }
     }
 
     handleButton() {
-        this.setState({test: 'none'});
+        this.setState({flagCongratulation: 'none', flagWelcome: 'none', flagFixedoverlay: 'none'});
+    }
+
+    recieveText(e) {
+        this.setState({text: e.target.value})
+    }
+
+    startButton() {
+        if (this.state.text === "") {
+            this.props.usernameUpdate("Unknown");
+        } else { 
+            this.props.usernameUpdate(this.state.text);
+        }
+        this.handleButton();
     }
 
     congratulation() {
-        this.setState({test: 'block'});
+        this.setState({flagCongratulation: 'block', flagFixedoverlay: 'block'});
+    }
+
+    welcome() {
+        this.setState({flagWelcome: 'block', flagFixedoverlay: 'block'});
     }
 
     render() {
@@ -60,6 +80,11 @@ class Rating extends React.Component {
             })
             if (isFirstTime === true) {
                 isFirstTime = props.isFirstTimeUpdate(false).isFirstTime;
+                props.rating.forEach((item) => {
+                    if (item.userId === props.userId && item.score === 0) {
+                        this.welcome();
+                    }
+                })
                 if (inRating) {
                     ratingAppearing = props.ratingAppearingUpdate(true).ratingAppearing;
                 }
@@ -72,7 +97,7 @@ class Rating extends React.Component {
         if (!inRating && ratingAppearing === true) {
             ratingAppearing = props.ratingAppearingUpdate(false).ratingAppearing;
         }
-
+        
         let myIndex = findMyPlace(props.rating, props.userId);
         let myName = props.rating[myIndex] ? props.rating[myIndex].username : null;
 
@@ -83,19 +108,32 @@ class Rating extends React.Component {
                     <div className="myRating">#{myIndex + 1}</div>
                 </div>
                 {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
+                
+                <div className="fixedoverlay" style={{display: this.state.flagFixedoverlay}} onClick={ () => this.handleButton() }></div>
+                <div className="congratulations" style={{display: this.state.flagCongratulation}}>
+                    <div className="congratulations-content">
+                        <div className="congratulations-title">Congratulations!</div>
+                        <img className="reward" src="./reward.svg"></img>
+                        <p>{myName}</p>
+                        <p>You are one of the Top 10 Wordseeker players!</p> 
+                        <p>It's worth sharing with friends ;)</p>
+                    </div>
+                    <div className="congratulations-share-wrapper">
+                        <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
+                    </div>
+                </div>
 
-                <div className="fixedoverlay" id="fixedoverlay" style={{display: this.state.test}} onClick={ () => this.handleButton() }></div>
-                <div className="congratulations" id="congratulations" style={{display: this.state.test}}>
-                <div className="congratulations-content">
-                    <div className="congratulations-title">Congratulations!</div>
-                    <img className="reward" src="./reward.svg"></img>
-                    <p>{myName}</p>
-                    <p>Поздравляем! Вы попали в ТОП10 рейтинга!</p>
+                <div className="fixedoverlay" style={{display: this.state.flagFixedoverlay}} onClick={ () => this.handleButton() }></div>
+                <div className="welcome" style={{display: this.state.flagWelcome}}>
+                    <div className="welcome-content">
+                        <img className="logo-2" src="./resolve-logo-2.png" alt="Resolve logo"></img>
+                        <div className="welcome-title">Hello!</div>
+                        <p>Welcome to the Wordseeker&mdash;a reSolve live demo!</p> 
+                        <p>Introduce yourself (you can do it later).</p>
+                        <input className="input-username" type="text" placeholder="Username" maxLength="15" value={this.state.text} onChange={(e) => this.recieveText(e)}/>
+                    </div>
+                    <div className="start-button" onClick={() => this.startButton()}>Start</div>
                 </div>
-                <div className="congratulations-share-wrapper">
-                    <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
-                </div>
-            </div>
 
         </div>)
     }
@@ -114,6 +152,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     ratingAppearingUpdate: (ratingAppearing) => dispatch(ratingAppearingUpdate(ratingAppearing)),
-    isFirstTimeUpdate: (isFirstTime) => dispatch(isFirstTimeUpdate(isFirstTime))
+    isFirstTimeUpdate: (isFirstTime) => dispatch(isFirstTimeUpdate(isFirstTime)),
+    usernameUpdate: (username) => dispatch(usernameUpdate(username))
 })
 export default connectViewModel(mapStateToProps, mapDispatchToProps)(Rating)

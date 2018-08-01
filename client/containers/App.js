@@ -21,23 +21,20 @@ class App extends React.PureComponent {
           method: "POST",
           body: JSON.stringify({ userId, username })
       })
-      .then(function(res){ 
-          if(res.status === 200) {
-            window.location.reload(true);
-          } else {
-            throw new Error(res)
-          }
+      .then(function(res){
+        if(res.status === 200) {
+          window.location.reload(true);
+        } else {
+          throw new Error(res)
+        }
        })
       .catch(function(res){ console.log(res) })
-
     }
   }
-  
   render() {
     if(!this.props.userId) {
       return null
     }
-
     return (
       <div className="main-wrapper">
         <Helmet>

@@ -3,7 +3,8 @@ export default {
   sendMessage(state, command) {
     const time = new Date()
     const hours = time.getHours()
-    const minutes = time.getMinutes()
+    let minutes = time.getMinutes()
+    
     if (minutes < 10) {
       minutes = "0" + minutes;
     }

@@ -61,7 +61,7 @@ class Chat extends React.Component {
 
                 <div className="enteryField">
                     <input className="inputMessage" type="text" placeholder="Text..." value={this.state.text} onChange={(e) => this.recieveText(e)} onKeyDown={(e) => this.buttonHandler(e)}/> 
-                    <img className="send" src="./send.svg" onClick={this.sendText.bind(this, this.props.userId)}></img>  
+                    <img className="send" src="./Send.svg" onClick={this.sendText.bind(this, this.props.userId)}></img>  
                 </div>
             </div>
         )
