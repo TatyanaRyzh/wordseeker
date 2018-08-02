@@ -17,13 +17,15 @@ class Chat extends React.Component {
         this.setState({text: e.target.value, input: e.target})
     }
 
-    sendText(userId, event) {
-        this.props.sendMessage(this.props.userId, this.state.text, this.props.userName);
-        this.setState({click: true})
+    sendText() {
+        if (this.state.text !== '') {
+            this.props.sendMessage(this.props.userId, this.state.text, this.props.userName);
+            this.setState({click: true, text: ''})
+        }
     }   
 
     buttonHandler(e){
-        if (e.which == 13) this.sendText(this.props.userId, e);
+        if (e.which == 13) this.sendText();
     }
 
     componentDidUpdate(snapshot) {
