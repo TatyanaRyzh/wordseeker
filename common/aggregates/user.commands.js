@@ -3,7 +3,8 @@ export default {
         return {
             type: 'CREATE_USER',
             payload: {
-                username: command.payload.username
+                username: command.payload.username,
+                userId: command.payload.userId
             }
         }
     },

@@ -4,7 +4,7 @@ export default {
       return {
         ...state,
         [event.aggregateId]: {
-            userId: event.aggregateId,
+            userId: event.payload.userId,
             username: event.payload.username,
         }
       }

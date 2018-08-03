@@ -42,6 +42,13 @@ class App extends React.PureComponent {
           <link rel="stylesheet" href="/bootstrap.min.css" />
           <link rel="stylesheet" href="/style.css" />
           <title>reSolve Wordseeker</title>
+          <meta property="og:url" content="http://wordseeker.tk" />
+          <meta property="og:type" content="article" />
+          <meta property="og:title" content="Wordseeker game" />
+          <meta property="og:description" content="I've already started playing! Join me and win the game. Let's find out who is the best." />
+          <meta property="og:image" content="https://pbs.twimg.com/profile_images/860216933295247360/UTYMOTU__400x400.jpg" />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:site" content="@resolvejs" />
         </Helmet>
     
         <Header />

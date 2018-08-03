@@ -119,7 +119,7 @@ class Rating extends React.Component {
                         <p>It's worth sharing with friends ;)</p>
                     </div>
                     <div className="congratulations-share-wrapper">
-                        <a href="http://twitter.com/share?text=Wordseeker Game&url=" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
+                        <a href="https://twitter.com/intent/tweet?text=https://wordseeker.tk/" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
                     </div>
                 </div>
 

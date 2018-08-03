@@ -18,7 +18,7 @@ class Header extends React.PureComponent {
           Hello, 
           <input className="input" type="text" onChange={this.onInputChange.bind(this, this.props.userId)} value={ this.props.username }  maxLength="15"/>!
         </div>
-        <a href="https://twitter.com/intent/tweet?text=https://wordseeker-stage.tk/" title="Share in Twitter" className="share-button" target="_blank">
+        <a href="https://twitter.com/intent/tweet?text=https://wordseeker.tk/" title="Share in Twitter" className="share-button" target="_blank">
 	        <img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>
 	        <div className="share-text">Share in Twitter</div>
         </a>

@@ -23,7 +23,7 @@ const routes = [
         aggregateId: userId,
         aggregateName: 'user',
         payload: {
-          username
+          username, userId
         }
       })
 
