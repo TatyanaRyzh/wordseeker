@@ -66,6 +66,10 @@ class Rating extends React.Component {
         this.setState({flagWelcome: 'block', flagFixedoverlay: 'block'});
     }
 
+    buttonHandler(e){
+        if (e.which == 13) this.startButton();
+    }
+
     render() {
         let props = this.props;
         let inRating = false;
@@ -107,7 +111,9 @@ class Rating extends React.Component {
                     <div className="ratingTitle">Rating</div>
                     <div className="myRating">#{myIndex + 1}</div>
                 </div>
-                {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
+                <div className="participants">
+                    {props.rating.length ? getTopUsers(props.rating, props.userId) : null}
+                </div>
                 
                 <div className="fixedoverlay" style={{display: this.state.flagFixedoverlay}} onClick={ () => this.handleButton() }></div>
                 <div className="congratulations" style={{display: this.state.flagCongratulation}}>
@@ -123,14 +129,14 @@ class Rating extends React.Component {
                     </div>
                 </div>
 
-                <div className="fixedoverlay" style={{display: this.state.flagFixedoverlay}} onClick={ () => this.handleButton() }></div>
                 <div className="welcome" style={{display: this.state.flagWelcome}}>
                     <div className="welcome-content">
-                        <img className="logo-2" src="./resolve-logo-2.png" alt="Resolve logo"></img>
+                        <img className="logo-2" src="./resolve-logo-2.svg" alt="Resolve logo"></img>
+                        <div className="close" onClick={ () => this.handleButton() }></div>
                         <div className="welcome-title">Hello!</div>
                         <p>Welcome to the Wordseeker&mdash;a reSolve live demo!</p> 
                         <p>Introduce yourself (you can do it later).</p>
-                        <input className="input-username" type="text" placeholder="Username" maxLength="15" value={this.state.text} onChange={(e) => this.recieveText(e)}/>
+                        <input className="input-username" type="text" placeholder="Username" maxLength="15" value={this.state.text} onChange={(e) => this.recieveText(e)} onKeyDown={(e) => this.buttonHandler(e)}/>
                     </div>
                     <div className="start-button" onClick={() => this.startButton()}>Start</div>
                 </div>

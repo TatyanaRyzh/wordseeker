@@ -16,11 +16,14 @@ class Header extends React.PureComponent {
       	<img className="logo" src="./resolve-logo.svg" alt="Resolve logo"></img>
         <div className="hello">
           Hello, 
-          <input className="input" type="text" onChange={this.onInputChange.bind(this, this.props.userId)} value={ this.props.username }  maxLength="15"/>!
+          <input className="inputName" type="text" onChange={this.onInputChange.bind(this, this.props.userId)} value={ this.props.username } maxLength="15"/>
         </div>
         <a href="https://twitter.com/intent/tweet?text=https://wordseeker.tk/" title="Share in Twitter" className="share-button" target="_blank">
-	        <img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>
-	        <div className="share-text">Share in Twitter</div>
+          <div className="big-icon"></div>
+	        {/*<img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>*/}
+          {/*<object className="big-icon" type="image/svg+xml" data="./twitter.svg"></object>*/}
+          
+	        Share in Twitter
         </a>
       </div>
     )

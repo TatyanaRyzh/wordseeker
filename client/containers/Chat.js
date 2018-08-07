@@ -10,17 +10,21 @@ class Chat extends React.Component {
     constructor(props) {
         super(props);
         this.listRef = React.createRef();
-        this.state = { text: "" , input: "", click: false}
+        this.click = false;
+        this.input = "";
+        this.state = { text: ""}
     }
 
     recieveText(e) {
-        this.setState({text: e.target.value, input: e.target})
+        this.input = e.target;
+        this.setState({text: e.target.value})
     }
 
     sendText() {
         if (this.state.text !== '') {
             this.props.sendMessage(this.props.userId, this.state.text, this.props.userName);
-            this.setState({click: true, text: ''})
+            this.click = true;
+            this.setState({text: ''})
         }
     }   
 
@@ -33,8 +37,8 @@ class Chat extends React.Component {
           const list = this.listRef.current;
           list.scrollTop = list.scrollHeight;
         }
-        if (this.state.click) {
-            this.state.input.value = '';
+        if (this.click) {
+            this.input.value = '';
         }
     }
 

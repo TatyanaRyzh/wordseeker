@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Footer = () => 
-<div className="footer clearfix">
+<div className="footer">
     <div className="dx">
         reSolve
     </div>
