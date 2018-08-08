@@ -10,7 +10,6 @@ class Chat extends React.Component {
     constructor(props) {
         super(props);
         this.listRef = React.createRef();
-        this.click = false;
         this.input = "";
         this.state = { text: ""}
     }
@@ -23,7 +22,6 @@ class Chat extends React.Component {
     sendText() {
         if (this.state.text !== '') {
             this.props.sendMessage(this.props.userId, this.state.text, this.props.userName);
-            this.click = true;
             this.setState({text: ''})
         }
     }   
@@ -36,9 +34,6 @@ class Chat extends React.Component {
         if (snapshot !== null) {
           const list = this.listRef.current;
           list.scrollTop = list.scrollHeight;
-        }
-        if (this.click) {
-            this.input.value = '';
         }
     }
 
