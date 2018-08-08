@@ -94,7 +94,7 @@ const buildArr = (
     let route = directions[rInt(directions.length, random)]
     let wordNumber = rInt(words.length, random)
     let word = words[wordNumber]
-    if (boundTryInsertToArr(StCoords, route, word)) {
+    if (boundTryInsertToArr(StCoords, route, word) && addedWords.length < 15) {
       words.splice(wordNumber, 1)
       addedWords.push(word)
     }
