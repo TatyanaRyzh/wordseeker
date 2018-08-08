@@ -18,11 +18,8 @@ class Header extends React.PureComponent {
           Hello, 
           <input className="inputName" type="text" onChange={this.onInputChange.bind(this, this.props.userId)} value={ this.props.username } maxLength="15"/>
         </div>
-        <a href="https://twitter.com/intent/tweet?text=https://wordseeker.tk/" title="Share in Twitter" className="share-button" target="_blank">
+        <a href="https://twitter.com/intent/tweet?text=http://wordseeker.tk/index.html" title="Share in Twitter" className="share-button" target="_blank">
           <div className="big-icon"></div>
-	        {/*<img className="big-icon" src="./twitter.svg" alt="Share in Twitter"></img>*/}
-          {/*<object className="big-icon" type="image/svg+xml" data="./twitter.svg"></object>*/}
-          
 	        Share in Twitter
         </a>
       </div>
