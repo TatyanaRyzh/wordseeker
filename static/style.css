@@ -34,8 +34,8 @@ a:visited, a:focus{
     width: 100%;
 
     margin-top: calc(1vh + 15px);
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
 
 .header{
@@ -333,7 +333,7 @@ body{
 }
 .fixedoverlay{
     background: #000;
-    opacity: 0.6;
+    opacity: 0.8;
 
     position: absolute;
     left: 0;
