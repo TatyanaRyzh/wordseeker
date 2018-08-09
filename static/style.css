@@ -42,7 +42,7 @@ a:visited, a:focus{
 
     box-sizing: border-box;
     width: 100%;
-    padding: 1vh 2vw;
+    padding: 0vw 1vw;
     height: 10vh;
 
     display: flex;
@@ -332,7 +332,8 @@ body{
     border-radius: 10px;
 }
 .fixedoverlay{
-    background: #0008;
+    background: #000;
+    opacity: 0.6;
 
     position: absolute;
     left: 0;
@@ -341,6 +342,7 @@ body{
     bottom: 0;
     z-index: 100;
 }
+
 .congratulations{
 
     position: absolute;
@@ -351,6 +353,7 @@ body{
     width: 450px;
     height: 450px;
     border-radius: 20px;
+    font-family: Segoe UI;
 
     background: #fff;
     z-index: 110;
@@ -366,23 +369,23 @@ body{
 }
 
 .congratulations-title{
-    margin-top: 20px;
+    margin-top: 18px;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .reward{
     width: 120px;
-    margin-top: 20px;
-    margin-bottom: 25px;
+    margin-top: 25px;
+    margin-bottom: 30px;
 }
 
 .congratulations p{
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     max-width: 90%;
     text-align: center;
-    margin: 0 0 20px;
+    margin: 0 0 7px;
 }
 
 .congratulations-share-wrapper{
@@ -393,7 +396,8 @@ body{
     height: 80px;
     
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
 }
 .congratulations-share{
     display: block;
@@ -577,16 +581,15 @@ body{
     
     color: #fff;
     font-family: Segoe UI;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 20px;
     cursor: pointer;
 }
 .logo-2{
-    margin-top: 10px;
+    margin-top: 12px;
 	height: 35px;
 }
 .welcome{
-
     position: absolute;
     left: 50%;
     top: 50%;
@@ -600,6 +603,7 @@ body{
     z-index: 110;
 
     overflow: hidden;
+    font-family: Segoe UI;
 }
 
 .welcome-content{
@@ -611,16 +615,17 @@ body{
 }
 
 .welcome-title{
-    margin-top: 30px;
+    margin-top: 18px;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .welcome p{
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     max-width: 80%;
     text-align: center;
+    margin: 0px 0 5px;
 }
 
 .input-username {
@@ -638,8 +643,8 @@ body{
 .close {
     width: 20px;
     height: 20px;
-    position: relative;
-    left: 44%;
-    top: -7%;
+    position: absolute;
+    left: 91%;
+    top: 4%;
     background: url(Close.svg);
 }

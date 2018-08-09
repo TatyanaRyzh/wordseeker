@@ -80,8 +80,9 @@ export function selectWord(points, wordType, index) {
     }
 
     angle = angle === 90 ? 0 : angle;
-    translateX = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateX + " - " + marginX + DIMENTION + ")";
-    translateY = "calc(" + LETTER_SIZE + DIMENTION + "* " + translateY + " - " + marginY + DIMENTION + ")";
+
+    translateX = "calc(" + LETTER_SIZE + DIMENTION + " * " + translateX + " - " + marginX + DIMENTION + ")";
+    translateY = "calc(" + LETTER_SIZE + DIMENTION + " * " + translateY + " - " + marginY + DIMENTION + ")";
 
     if (wordType === "mine") {
 color = "#3c4da9";

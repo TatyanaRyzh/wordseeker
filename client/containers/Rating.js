@@ -119,13 +119,14 @@ class Rating extends React.Component {
                 <div className="congratulations" style={{display: this.state.flagCongratulation}}>
                     <div className="congratulations-content">
                         <div className="congratulations-title">Congratulations!</div>
+                        <div className="close" onClick={ () => this.handleButton() }></div>
                         <img className="reward" src="./reward.svg"></img>
                         <p>{myName}</p>
                         <p>You are one of the Top 10 Wordseeker players!</p> 
                         <p>It's worth sharing with friends ;)</p>
                     </div>
                     <div className="congratulations-share-wrapper">
-                        <a href="https://twitter.com/intent/tweet?text=http://wordseeker.tk/index.html" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
+                        <a href="https://twitter.com/intent/tweet?text=http://wordseeker.tk/" title="Share in Twitter" target="_blank" className="congratulations-share"><img className="congratulations-share-twitter" src="./twitter.svg"></img>Share in Twitter</a>
                     </div>
                 </div>
 
